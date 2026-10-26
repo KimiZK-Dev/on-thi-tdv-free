@@ -35,7 +35,7 @@
       var gain = ctx.createGain();
       osc.type = type || 'sine';
       osc.frequency.setValueAtTime(freq, ctx.currentTime + (delay || 0));
-      gain.gain.setValueAtTime(0.06, ctx.currentTime + (delay || 0));
+      gain.gain.setValueAtTime(0.05, ctx.currentTime + (delay || 0));
       gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + (delay || 0) + duration);
       osc.connect(gain);
       gain.connect(ctx.destination);
@@ -66,14 +66,19 @@
     });
   }
 
-  // Icons SVG nội bộ
+  // Icons SVG nội bộ không dùng emoji
   var SVG_ICONS = {
     bookmark: '<svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>',
     bookmarkFilled: '<svg class="btn-icon-svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>',
     book: '<svg class="reading-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>',
     inbox: '<svg class="empty-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>',
     bell: '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>',
-    bellOff: '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.7 3A6 6 0 0 1 18 8a21.3 21.3 0 0 0 .6 5"></path><path d="M17 17H3s3-2 3-9a4.67 4.67 0 0 1 .3-1.7"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>'
+    bellOff: '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.7 3A6 6 0 0 1 18 8a21.3 21.3 0 0 0 .6 5"></path><path d="M17 17H3s3-2 3-9a4.67 4.67 0 0 1 .3-1.7"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>',
+    check: '<svg class="indicator-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+    cross: '<svg class="indicator-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
+    eye: '<svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path></svg>',
+    chevronDown: '<svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>',
+    chevronUp: '<svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>'
   };
 
   // Quản lý trạng thái hiện tại của phiên làm bài
@@ -85,9 +90,11 @@
     originalQuestions: [],
     userAnswers: {},       // { [qIndex]: optIndex }
     bookmarked: {},        // { [qIndex]: true }
+    revealedAnswers: {},   // { [qIndex]: true } -> xem đáp án chủ động trong Study mode
+    collapsedPassages: {}, // { [qIndex]: true } -> thu gọn bài đọc trên mobile
     isSubmitted: false,
     mode: 'study',         // 'study' | 'exam'
-    filterView: 'all',     // 'all' | 'wrong' | 'correct'
+    filterView: 'all',     // 'all' | 'wrong' | 'correct' | 'skipped'
     timerSeconds: 0,
     timerInterval: null,
     isShuffled: false
@@ -99,6 +106,18 @@
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
+  }
+
+  // Chuẩn hóa loại bỏ chữ cái A., B., C., D. thừa ở đầu nội dung đáp án (chỉ khi là tiền tố trắc nghiệm)
+  function cleanOptionText(text) {
+    if (!text) return '';
+    return String(text).replace(/^[A-Fa-f][\.\:\)\-\/]+\s*/, '').trim();
+  }
+
+  // Chuẩn hóa loại bỏ chữ "Câu 1:" hoặc số ở đầu câu hỏi nếu đã có nhãn
+  function cleanQuestionText(text) {
+    if (!text) return '';
+    return String(text).replace(/^(Câu\s*\d+[\.\:\s]*|Question\s*\d+[\.\:\s]*|\d+[\.\:\)\s]+)/i, '').trim();
   }
 
   function getRawQuestionsList(subjectId) {
@@ -119,7 +138,6 @@
     return getRawQuestionsList(subjectId).length;
   }
 
-  // Bộ lọc 3 tầng thông minh bám sát dữ liệu
   function getQuestionsForCategoryTab(subjectId, tabConfig, tabIndex, totalTabs) {
     var rawData = window.TDV_DATA ? window.TDV_DATA[subjectId] : null;
     if (!rawData) return [];
@@ -200,7 +218,7 @@
         var item = allQuestionsInSubject[i];
         var itemKey = item.passageId || item.groupId || item.readingId;
         var candidateText =
-          item.passage || item.reading || item.readingText || item.groupText || item.context || '';
+          item.readingPassage || item.passage || item.reading || item.readingText || item.groupText || item.context || '';
         if (itemKey === groupKey && candidateText) {
           reading = candidateText;
           break;
@@ -213,7 +231,7 @@
 
     return {
       readingText: String(reading || '').trim(),
-      questionText: String(questionText || '').trim()
+      questionText: cleanQuestionText(String(questionText || '').trim())
     };
   }
 
@@ -414,6 +432,217 @@
     }
   }
 
+  // Chuyển nhanh giữa câu hỏi trước/sau trên điện thoại
+  function findCenterQuestionIndex() {
+    var cards = document.querySelectorAll('.question-card');
+    if (cards.length === 0) return 0;
+    var centerY = window.innerHeight / 2;
+    var closestIdx = 0;
+    var closestDist = Infinity;
+
+    for (var i = 0; i < cards.length; i++) {
+      var rect = cards[i].getBoundingClientRect();
+      var cardCenter = rect.top + rect.height / 2;
+      var dist = Math.abs(cardCenter - centerY);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closestIdx = parseInt(cards[i].getAttribute('data-q-index'), 10) || 0;
+      }
+    }
+    return closestIdx;
+  }
+
+  function goToNextQuestion() {
+    playClickSound();
+    var cur = findCenterQuestionIndex();
+    var next = Math.min(currentState.questions.length - 1, cur + 1);
+    scrollToQuestion(next);
+  }
+
+  function goToPrevQuestion() {
+    playClickSound();
+    var cur = findCenterQuestionIndex();
+    var prev = Math.max(0, cur - 1);
+    scrollToQuestion(prev);
+  }
+
+  // Toggled xem bài đọc trên mobile
+  function togglePassageCollapse(qIndex) {
+    currentState.collapsedPassages[qIndex] = !currentState.collapsedPassages[qIndex];
+    var box = document.getElementById('reading-passage-' + qIndex);
+    var btn = document.getElementById('btn-toggle-passage-' + qIndex);
+    if (box) {
+      box.classList.toggle('is-collapsed', !currentState.collapsedPassages[qIndex]);
+    }
+    if (btn) {
+      btn.innerHTML = currentState.collapsedPassages[qIndex]
+        ? SVG_ICONS.chevronUp + '<span>Thu gọn bài đọc</span>'
+        : SVG_ICONS.chevronDown + '<span>Xem toàn bộ bài đọc</span>';
+    }
+  }
+
+  // Toggle xem đáp án trong Study mode
+  function toggleRevealAnswer(qIndex) {
+    playClickSound();
+    currentState.revealedAnswers[qIndex] = !currentState.revealedAnswers[qIndex];
+    renderSingleQuestionCard(qIndex);
+  }
+
+  // Xây dựng HTML một thẻ câu hỏi hoàn chỉnh (Clean, Mobile First & Chuẩn đáp án)
+  function buildQuestionCardHtml(i, q, allSubjectQuestions) {
+    var fullContent = getFullReadingAndQuestion(q, allSubjectQuestions);
+    var selectedAns = currentState.userAnswers[i];
+    var isAnswered = selectedAns !== undefined;
+    var isBookmarked = !!currentState.bookmarked[i];
+    var isRevealed = !!currentState.revealedAnswers[i];
+    var letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+    // Lọc theo kết quả sau khi nộp bài
+    if (currentState.isSubmitted && currentState.filterView !== 'all') {
+      var isCorrect = selectedAns === q.answer;
+      if (currentState.filterView === 'wrong' && (isCorrect || !isAnswered)) return '';
+      if (currentState.filterView === 'correct' && !isCorrect) return '';
+      if (currentState.filterView === 'skipped' && isAnswered) return '';
+    }
+
+    var cardClasses = ['question-card'];
+    if (isBookmarked) cardClasses.push('is-bookmarked');
+    if ((currentState.isSubmitted || (currentState.mode === 'study' && isAnswered)) && isAnswered) {
+      cardClasses.push(selectedAns === q.answer ? 'card-status-correct' : 'card-status-wrong');
+    }
+
+    var html = '<div class="' + cardClasses.join(' ') + '" id="question-card-' + i + '" data-q-index="' + i + '">';
+
+    // 1. Header hàng trên: Số thứ tự + Tag kỳ thi + Badge kết quả + Bookmark
+    var resultBadgeHtml = '';
+    var correctLetter = letters[q.answer] || '';
+    if (currentState.isSubmitted) {
+      if (!isAnswered) {
+        resultBadgeHtml = '<span class="eval-tag eval-tag-skipped">Chưa trả lời</span>';
+      } else if (selectedAns === q.answer) {
+        resultBadgeHtml = '<span class="eval-tag eval-tag-correct">' + SVG_ICONS.check + ' Đúng (+1đ)</span>';
+      } else {
+        var chosenLetter = letters[selectedAns] || '';
+        resultBadgeHtml = '<span class="eval-tag eval-tag-wrong">' + SVG_ICONS.cross + ' Sai (Chọn ' + chosenLetter + ' - Đáp án: ' + correctLetter + ')</span>';
+      }
+    } else if (currentState.mode === 'study') {
+      if (isAnswered) {
+        if (selectedAns === q.answer) {
+          resultBadgeHtml = '<span class="eval-tag eval-tag-correct">' + SVG_ICONS.check + ' Chính xác</span>';
+        } else {
+          var chosenLetter = letters[selectedAns] || '';
+          resultBadgeHtml = '<span class="eval-tag eval-tag-wrong">' + SVG_ICONS.cross + ' Chọn ' + chosenLetter + ' - Đáp án: ' + correctLetter + '</span>';
+        }
+      } else if (isRevealed) {
+        resultBadgeHtml = '<span class="eval-tag eval-tag-revealed">' + SVG_ICONS.eye + ' Đáp án: ' + correctLetter + '</span>';
+      }
+    }
+
+    var bookmarkIcon = isBookmarked ? SVG_ICONS.bookmarkFilled : SVG_ICONS.bookmark;
+
+    // Nút Xem đáp án trực tiếp trong Study Mode
+    var revealBtnHtml = '';
+    if (currentState.mode === 'study' && !currentState.isSubmitted) {
+      revealBtnHtml =
+        '<button type="button" class="btn-peek-answer ' + (isRevealed ? 'active' : '') + '" data-q-index="' + i + '" title="Xem đáp án chuẩn">' +
+          SVG_ICONS.eye +
+          '<span>' + (isRevealed ? 'Ẩn đáp án' : 'Xem đáp án') + '</span>' +
+        '</button>';
+    }
+
+    html +=
+      '<div class="question-header-row">' +
+        '<div class="question-number-group">' +
+          '<span class="question-number-pill">Câu ' + (i + 1) + '</span>' +
+          resultBadgeHtml +
+        '</div>' +
+        '<div class="question-actions">' +
+          revealBtnHtml +
+          '<button type="button" class="btn-bookmark ' + (isBookmarked ? 'active' : '') + '" data-q-index="' + i + '" title="Đánh dấu câu hỏi này">' +
+            bookmarkIcon +
+            '<span class="bookmark-label">' + (isBookmarked ? 'Đã lưu' : 'Đánh dấu') + '</span>' +
+          '</button>' +
+        '</div>' +
+      '</div>';
+
+    // 2. Bài đọc hiểu nếu có (Hỗ trợ thu gọn trên màn hình điện thoại)
+    if (fullContent.readingText !== '') {
+      var isLong = fullContent.readingText.length > 220;
+      var isCollapsed = isLong && !currentState.collapsedPassages[i];
+
+      html +=
+        '<div class="reading-passage-box ' + (isCollapsed ? 'is-collapsed' : '') + '" id="reading-passage-' + i + '">' +
+          '<div class="reading-passage-header">' +
+            '<div class="reading-passage-title-group">' +
+              SVG_ICONS.book +
+              '<span class="reading-passage-title">Đoạn văn đọc hiểu</span>' +
+            '</div>' +
+            (isLong ?
+              '<button type="button" class="btn-toggle-passage" id="btn-toggle-passage-' + i + '" data-q-index="' + i + '">' +
+                (isCollapsed ? SVG_ICONS.chevronDown + '<span>Xem toàn bộ</span>' : SVG_ICONS.chevronUp + '<span>Thu gọn</span>') +
+              '</button>'
+              : '') +
+          '</div>' +
+          '<div class="reading-passage-body">' + escapeHtml(fullContent.readingText) + '</div>' +
+        '</div>';
+    }
+
+    // 3. Nội dung câu hỏi (Đã chuẩn hóa, không lặp số câu)
+    html += '<div class="question-title-text">' + escapeHtml(fullContent.questionText) + '</div>';
+
+    // 4. Danh sách lựa chọn đáp án
+    html += '<div class="options-grid">';
+    var options = q.options || q.choices || [];
+    var shouldShowAnswer = (currentState.mode === 'study' && (isAnswered || isRevealed)) || currentState.isSubmitted;
+
+    for (var optIdx = 0; optIdx < options.length; optIdx++) {
+      var optClasses = ['option-item'];
+      var isChecked = selectedAns === optIdx;
+      var isCorrectOpt = optIdx === q.answer;
+      var indicatorContent = '';
+
+      if (shouldShowAnswer) {
+        if (isCorrectOpt) {
+          optClasses.push('correct');
+          indicatorContent = SVG_ICONS.check;
+        } else if (isChecked && !isCorrectOpt) {
+          optClasses.push('wrong');
+          indicatorContent = SVG_ICONS.cross;
+        }
+      } else if (isChecked) {
+        optClasses.push('selected');
+        indicatorContent = '<div class="indicator-radio-dot"></div>';
+      }
+
+      var optLetter = letters[optIdx] || (optIdx + 1);
+      var cleanedText = cleanOptionText(options[optIdx]);
+
+      html +=
+        '<div class="' + optClasses.join(' ') + '" data-q-index="' + i + '" data-opt-index="' + optIdx + '">' +
+          '<div class="option-letter">' + optLetter + '</div>' +
+          '<div class="option-content">' + escapeHtml(cleanedText) + '</div>' +
+          '<div class="option-indicator">' + indicatorContent + '</div>' +
+        '</div>';
+    }
+    html += '</div>';
+
+    // 5. Khung giải thích & đáp án chuẩn
+    if (shouldShowAnswer && (q.explanation || q.answer !== undefined)) {
+      var correctText = cleanOptionText(options[q.answer] || '');
+      html +=
+        '<div class="explanation-box">' +
+          '<div class="explanation-header">' +
+            '<span class="explanation-badge">Đáp án đúng: ' + (letters[q.answer] || '') + '</span>' +
+            '<span class="explanation-answer-text">' + escapeHtml(correctText) + '</span>' +
+          '</div>' +
+          (q.explanation ? '<div class="explanation-detail">' + escapeHtml(q.explanation) + '</div>' : '') +
+        '</div>';
+    }
+
+    html += '</div>';
+    return html;
+  }
+
   function renderQuestions() {
     var container = document.getElementById('quiz-questions-container');
     var footer = document.getElementById('quiz-footer-actions');
@@ -435,136 +664,86 @@
 
     var allSubjectQuestions = getRawQuestionsList(currentState.subjectId);
     var html = '';
-    var letters = ['A', 'B', 'C', 'D', 'E', 'F'];
 
     for (var i = 0; i < questions.length; i++) {
-      var q = questions[i];
-      var fullContent = getFullReadingAndQuestion(q, allSubjectQuestions);
-      var selectedAns = currentState.userAnswers[i];
-      var isAnswered = selectedAns !== undefined;
-      var isBookmarked = !!currentState.bookmarked[i];
+      html += buildQuestionCardHtml(i, questions[i], allSubjectQuestions);
+    }
 
-      if (currentState.isSubmitted && currentState.filterView !== 'all') {
-        var isCorrect = selectedAns === q.answer;
-        if (currentState.filterView === 'wrong' && isCorrect) continue;
-        if (currentState.filterView === 'correct' && !isCorrect) continue;
-      }
-
-      var cardClasses = ['question-card'];
-      if (isBookmarked) cardClasses.push('is-bookmarked');
-      if (currentState.isSubmitted && isAnswered) {
-        cardClasses.push(selectedAns === q.answer ? 'card-status-correct' : 'card-status-wrong');
-      }
-
-      html += '<div class="' + cardClasses.join(' ') + '" id="question-card-' + i + '" data-q-index="' + i + '">';
-
-      var bookmarkIcon = isBookmarked ? SVG_ICONS.bookmarkFilled : SVG_ICONS.bookmark;
-
-      html +=
-        '<div class="question-header-row">' +
-          '<div class="question-number-badge">' +
-            '<span>Câu ' + (i + 1) + '</span>' +
-            '<span class="question-total-badge">/ ' + questions.length + '</span>' +
-          '</div>' +
-          '<div class="question-actions">' +
-            (q.chapter ? '<span class="question-chapter-chip">' + escapeHtml(q.chapter) + '</span>' : '') +
-            '<button type="button" class="btn-bookmark ' + (isBookmarked ? 'active' : '') + '" data-q-index="' + i + '" title="Đánh dấu câu hỏi cần xem lại">' +
-              bookmarkIcon +
-              '<span>' + (isBookmarked ? 'Đã đánh dấu' : 'Đánh dấu') + '</span>' +
-            '</button>' +
-          '</div>' +
+    if (html.trim() === '') {
+      html =
+        '<div class="empty-quiz-state">' +
+          '<div class="empty-icon-box">' + SVG_ICONS.inbox + '</div>' +
+          '<h3>Không có câu hỏi nào khớp với bộ lọc</h3>' +
+          '<button type="button" class="btn-clear-filter" onclick="window.TDV_QUIZ.setFilterView(\'all\')">Xem tất cả câu hỏi</button>' +
         '</div>';
-
-      if (fullContent.readingText !== '') {
-        html +=
-          '<div class="reading-passage-box">' +
-            '<div class="reading-passage-header">' +
-              SVG_ICONS.book +
-              '<span class="reading-passage-title">Đoạn văn đọc hiểu (Reading Passage)</span>' +
-            '</div>' +
-            '<div class="reading-passage-body">' + escapeHtml(fullContent.readingText) + '</div>' +
-          '</div>';
-      }
-
-      html +=
-        '<div class="question-title-text">' + escapeHtml(fullContent.questionText) + '</div>';
-
-      html += '<div class="options-grid">';
-      var options = q.options || q.choices || [];
-      for (var optIdx = 0; optIdx < options.length; optIdx++) {
-        var optClasses = ['option-item'];
-        var isChecked = selectedAns === optIdx;
-
-        if (currentState.mode === 'study') {
-          if (isAnswered) {
-            if (optIdx === q.answer) {
-              optClasses.push('correct');
-            } else if (isChecked && optIdx !== q.answer) {
-              optClasses.push('wrong');
-            }
-          } else if (isChecked) {
-            optClasses.push('selected');
-          }
-        } else {
-          if (!currentState.isSubmitted) {
-            if (isChecked) optClasses.push('selected');
-          } else {
-            if (optIdx === q.answer) {
-              optClasses.push('correct');
-            } else if (isChecked && optIdx !== q.answer) {
-              optClasses.push('wrong');
-            }
-          }
-        }
-
-        var optLetter = letters[optIdx] || (optIdx + 1);
-
-        html +=
-          '<div class="' + optClasses.join(' ') + '" data-q-index="' + i + '" data-opt-index="' + optIdx + '">' +
-            '<div class="option-letter">' + optLetter + '</div>' +
-            '<div class="option-content">' + escapeHtml(options[optIdx]) + '</div>' +
-            '<div class="option-indicator"></div>' +
-          '</div>';
-      }
-      html += '</div>';
-
-      var showExplanation = (currentState.mode === 'study' && isAnswered) || currentState.isSubmitted;
-      if (showExplanation && (q.explanation || q.answer !== undefined)) {
-        var correctOptionText = (options[q.answer] !== undefined) ? options[q.answer] : '';
-        html +=
-          '<div class="explanation-box">' +
-            '<div class="explanation-header">' +
-              '<span class="explanation-badge">Đáp án đúng: ' + (letters[q.answer] || '') + '</span>' +
-              '<span class="explanation-answer-text">' + escapeHtml(correctOptionText) + '</span>' +
-            '</div>' +
-            (q.explanation ? '<div class="explanation-detail">' + escapeHtml(q.explanation) + '</div>' : '') +
-          '</div>';
-      }
-
-      html += '</div>';
     }
 
     container.innerHTML = html;
+    attachQuestionCardListeners(container);
+    updateProgressStats();
+  }
 
-    var optionNodes = container.querySelectorAll('.option-item');
+  function renderSingleQuestionCard(qIndex) {
+    var oldCard = document.getElementById('question-card-' + qIndex);
+    if (!oldCard) {
+      renderQuestions();
+      return;
+    }
+
+    var allSubjectQuestions = getRawQuestionsList(currentState.subjectId);
+    var q = currentState.questions[qIndex];
+    var newCardHtml = buildQuestionCardHtml(qIndex, q, allSubjectQuestions);
+
+    var temp = document.createElement('div');
+    temp.innerHTML = newCardHtml;
+    var newCard = temp.firstElementChild;
+
+    if (newCard) {
+      oldCard.replaceWith(newCard);
+      attachSingleCardListeners(newCard, qIndex);
+    }
+  }
+
+  function attachSingleCardListeners(card, qIndex) {
+    var optionNodes = card.querySelectorAll('.option-item');
     for (var k = 0; k < optionNodes.length; k++) {
       optionNodes[k].addEventListener('click', function () {
-        var qIdx = parseInt(this.getAttribute('data-q-index'), 10);
-        var optIdx = parseInt(this.getAttribute('data-opt-index'), 10);
-        selectAnswer(qIdx, optIdx);
+        var opt = parseInt(this.getAttribute('data-opt-index'), 10);
+        selectAnswer(qIndex, opt);
       });
     }
 
-    var bookmarkBtns = container.querySelectorAll('.btn-bookmark');
-    for (var b = 0; b < bookmarkBtns.length; b++) {
-      bookmarkBtns[b].addEventListener('click', function (e) {
+    var bookmarkBtn = card.querySelector('.btn-bookmark');
+    if (bookmarkBtn) {
+      bookmarkBtn.addEventListener('click', function (e) {
         e.stopPropagation();
-        var qIdx = parseInt(this.getAttribute('data-q-index'), 10);
-        toggleBookmark(qIdx);
+        toggleBookmark(qIndex);
       });
     }
 
-    updateProgressStats();
+    var peekBtn = card.querySelector('.btn-peek-answer');
+    if (peekBtn) {
+      peekBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        toggleRevealAnswer(qIndex);
+      });
+    }
+
+    var passageToggleBtn = card.querySelector('.btn-toggle-passage');
+    if (passageToggleBtn) {
+      passageToggleBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        togglePassageCollapse(qIndex);
+      });
+    }
+  }
+
+  function attachQuestionCardListeners(container) {
+    var cards = container.querySelectorAll('.question-card');
+    for (var i = 0; i < cards.length; i++) {
+      var qIdx = parseInt(cards[i].getAttribute('data-q-index'), 10);
+      attachSingleCardListeners(cards[i], qIdx);
+    }
   }
 
   function selectAnswer(qIndex, optIndex) {
@@ -600,121 +779,14 @@
     var options = card.querySelectorAll('.option-item');
     for (var i = 0; i < options.length; i++) {
       var idx = parseInt(options[i].getAttribute('data-opt-index'), 10);
+      var ind = options[i].querySelector('.option-indicator');
       if (idx === optIndex) {
         options[i].classList.add('selected');
+        if (ind) ind.innerHTML = '<div class="indicator-radio-dot"></div>';
       } else {
         options[i].classList.remove('selected');
+        if (ind) ind.innerHTML = '';
       }
-    }
-  }
-
-  function renderSingleQuestionCard(qIndex) {
-    var oldCard = document.getElementById('question-card-' + qIndex);
-    if (!oldCard) {
-      renderQuestions();
-      return;
-    }
-
-    var q = currentState.questions[qIndex];
-    var allSubjectQuestions = getRawQuestionsList(currentState.subjectId);
-    var fullContent = getFullReadingAndQuestion(q, allSubjectQuestions);
-    var selectedAns = currentState.userAnswers[qIndex];
-    var isAnswered = selectedAns !== undefined;
-    var isBookmarked = !!currentState.bookmarked[qIndex];
-    var letters = ['A', 'B', 'C', 'D', 'E', 'F'];
-
-    var cardClasses = ['question-card'];
-    if (isBookmarked) cardClasses.push('is-bookmarked');
-    if (isAnswered) {
-      cardClasses.push(selectedAns === q.answer ? 'card-status-correct' : 'card-status-wrong');
-    }
-
-    var bookmarkIcon = isBookmarked ? SVG_ICONS.bookmarkFilled : SVG_ICONS.bookmark;
-
-    var html =
-      '<div class="question-header-row">' +
-        '<div class="question-number-badge">' +
-          '<span>Câu ' + (qIndex + 1) + '</span>' +
-          '<span class="question-total-badge">/ ' + currentState.questions.length + '</span>' +
-        '</div>' +
-        '<div class="question-actions">' +
-          (q.chapter ? '<span class="question-chapter-chip">' + escapeHtml(q.chapter) + '</span>' : '') +
-          '<button type="button" class="btn-bookmark ' + (isBookmarked ? 'active' : '') + '" data-q-index="' + qIndex + '" title="Đánh dấu câu hỏi cần xem lại">' +
-            bookmarkIcon +
-            '<span>' + (isBookmarked ? 'Đã đánh dấu' : 'Đánh dấu') + '</span>' +
-          '</button>' +
-        '</div>' +
-      '</div>';
-
-    if (fullContent.readingText !== '') {
-      html +=
-        '<div class="reading-passage-box">' +
-          '<div class="reading-passage-header">' +
-            SVG_ICONS.book +
-            '<span class="reading-passage-title">Đoạn văn đọc hiểu (Reading Passage)</span>' +
-          '</div>' +
-          '<div class="reading-passage-body">' + escapeHtml(fullContent.readingText) + '</div>' +
-        '</div>';
-    }
-
-    html += '<div class="question-title-text">' + escapeHtml(fullContent.questionText) + '</div>';
-
-    html += '<div class="options-grid">';
-    var options = q.options || q.choices || [];
-    for (var optIdx = 0; optIdx < options.length; optIdx++) {
-      var optClasses = ['option-item'];
-      var isChecked = selectedAns === optIdx;
-
-      if (isAnswered) {
-        if (optIdx === q.answer) {
-          optClasses.push('correct');
-        } else if (isChecked && optIdx !== q.answer) {
-          optClasses.push('wrong');
-        }
-      } else if (isChecked) {
-        optClasses.push('selected');
-      }
-
-      var optLetter = letters[optIdx] || (optIdx + 1);
-
-      html +=
-        '<div class="' + optClasses.join(' ') + '" data-q-index="' + qIndex + '" data-opt-index="' + optIdx + '">' +
-          '<div class="option-letter">' + optLetter + '</div>' +
-          '<div class="option-content">' + escapeHtml(options[optIdx]) + '</div>' +
-          '<div class="option-indicator"></div>' +
-        '</div>';
-    }
-    html += '</div>';
-
-    if (isAnswered && (q.explanation || q.answer !== undefined)) {
-      var correctOptionText = (options[q.answer] !== undefined) ? options[q.answer] : '';
-      html +=
-        '<div class="explanation-box">' +
-          '<div class="explanation-header">' +
-            '<span class="explanation-badge">Đáp án đúng: ' + (letters[q.answer] || '') + '</span>' +
-            '<span class="explanation-answer-text">' + escapeHtml(correctOptionText) + '</span>' +
-          '</div>' +
-          (q.explanation ? '<div class="explanation-detail">' + escapeHtml(q.explanation) + '</div>' : '') +
-        '</div>';
-    }
-
-    oldCard.className = cardClasses.join(' ');
-    oldCard.innerHTML = html;
-
-    var newOptions = oldCard.querySelectorAll('.option-item');
-    for (var k = 0; k < newOptions.length; k++) {
-      newOptions[k].addEventListener('click', function () {
-        var opt = parseInt(this.getAttribute('data-opt-index'), 10);
-        selectAnswer(qIndex, opt);
-      });
-    }
-
-    var newBookmark = oldCard.querySelector('.btn-bookmark');
-    if (newBookmark) {
-      newBookmark.addEventListener('click', function (e) {
-        e.stopPropagation();
-        toggleBookmark(qIndex);
-      });
     }
   }
 
@@ -735,7 +807,7 @@
       if (btn) {
         btn.classList.toggle('active', isMarked);
         btn.innerHTML = (isMarked ? SVG_ICONS.bookmarkFilled : SVG_ICONS.bookmark) +
-          '<span>' + (isMarked ? 'Đã đánh dấu' : 'Đánh dấu') + '</span>';
+          '<span class="bookmark-label">' + (isMarked ? 'Đã lưu' : 'Đánh dấu') + '</span>';
       }
     }
 
@@ -822,7 +894,25 @@
     modal.classList.add('active');
 
     var filterBar = document.getElementById('quiz-result-filter-bar');
-    if (filterBar) filterBar.classList.remove('hidden');
+    if (filterBar) {
+      filterBar.classList.remove('hidden');
+      var btnAll = document.getElementById('filter-btn-all');
+      var btnWrong = document.getElementById('filter-btn-wrong');
+      var btnCorrect = document.getElementById('filter-btn-correct');
+      var btnSkipped = document.getElementById('filter-btn-skipped');
+
+      var wrongCount = answeredCount - correctCount;
+      if (btnAll) btnAll.textContent = 'Tất cả (' + total + ')';
+      if (btnWrong) {
+        btnWrong.innerHTML = SVG_ICONS.cross + '<span>Câu sai (' + wrongCount + ')</span>';
+      }
+      if (btnCorrect) {
+        btnCorrect.innerHTML = SVG_ICONS.check + '<span>Câu đúng (' + correctCount + ')</span>';
+      }
+      if (btnSkipped) {
+        btnSkipped.innerHTML = '<span class="status-dot"></span><span>Chưa làm (' + unansweredCount + ')</span>';
+      }
+    }
   }
 
   function hideResultModal() {
@@ -831,6 +921,15 @@
       modal.classList.add('hidden');
       modal.classList.remove('active');
     }
+  }
+
+  function setFilterView(filterType) {
+    currentState.filterView = filterType;
+    var filterBtns = document.querySelectorAll('.result-filter-btn');
+    filterBtns.forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-filter') === filterType);
+    });
+    renderQuestions();
   }
 
   function resetQuiz(silent) {
@@ -843,6 +942,7 @@
     clearProgress();
     currentState.userAnswers = {};
     currentState.bookmarked = {};
+    currentState.revealedAnswers = {};
     currentState.isSubmitted = false;
     currentState.filterView = 'all';
 
@@ -885,6 +985,7 @@
 
     currentState.userAnswers = {};
     currentState.bookmarked = {};
+    currentState.revealedAnswers = {};
     currentState.isSubmitted = false;
     renderQuestions();
   }
@@ -917,9 +1018,24 @@
     if (!subjectConfig) return;
 
     var tabs = subjectConfig.tabs || window.TDV_CONFIG.DEFAULT_TABS;
-    var targetTab = tabs[tabIndex] || tabs[0];
+    var targetTab = null;
+    if (typeof tabIndex === 'number' && tabs[tabIndex]) {
+      targetTab = tabs[tabIndex];
+    } else {
+      for (var t = 0; t < tabs.length; t++) {
+        if (tabs[t].id === tabId) {
+          targetTab = tabs[t];
+          tabIndex = t;
+          break;
+        }
+      }
+      if (!targetTab) {
+        targetTab = tabs[0];
+        tabIndex = 0;
+      }
+    }
 
-    currentState.activeTabId = tabId;
+    currentState.activeTabId = targetTab.id;
     currentState.activeTabIndex = tabIndex;
     currentState.filterView = 'all';
 
@@ -945,6 +1061,8 @@
       currentState.isSubmitted = false;
       currentState.timerSeconds = 0;
     }
+
+    currentState.revealedAnswers = {};
 
     hideResultModal();
     var filterBar = document.getElementById('quiz-result-filter-bar');
@@ -1048,9 +1166,15 @@
     var btnClosePalette = document.getElementById('btn-close-palette');
     var paletteOverlay = document.getElementById('palette-overlay');
     var mobilePaletteBtn = document.getElementById('mobile-btn-palette');
+    var mobilePrevBtn = document.getElementById('mobile-btn-prev');
+    var mobileNextBtn = document.getElementById('mobile-btn-next');
+    var mobileSubmitBtn = document.getElementById('mobile-btn-submit');
 
     if (btnOpenPalette) btnOpenPalette.addEventListener('click', openPaletteDrawer);
     if (mobilePaletteBtn) mobilePaletteBtn.addEventListener('click', openPaletteDrawer);
+    if (mobilePrevBtn) mobilePrevBtn.addEventListener('click', goToPrevQuestion);
+    if (mobileNextBtn) mobileNextBtn.addEventListener('click', goToNextQuestion);
+    if (mobileSubmitBtn) mobileSubmitBtn.addEventListener('click', submitQuiz);
     if (btnClosePalette) btnClosePalette.addEventListener('click', closePaletteDrawer);
     if (paletteOverlay) paletteOverlay.addEventListener('click', closePaletteDrawer);
 
@@ -1080,10 +1204,7 @@
     filterBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
         var f = this.getAttribute('data-filter');
-        currentState.filterView = f;
-        filterBtns.forEach(function (b) { b.classList.remove('active'); });
-        this.classList.add('active');
-        renderQuestions();
+        setFilterView(f);
       });
     });
 
@@ -1108,31 +1229,14 @@
 
       if (['1', '2', '3', '4'].indexOf(e.key) !== -1) {
         var opt = parseInt(e.key, 10) - 1;
-        var centerCard = findCenterQuestionCard();
-        if (centerCard) {
-          var qIndex = parseInt(centerCard.getAttribute('data-q-index'), 10);
-          selectAnswer(qIndex, opt);
-        }
+        var centerIdx = findCenterQuestionIndex();
+        selectAnswer(centerIdx, opt);
+      } else if (e.key === 'ArrowRight' || e.key === 'j') {
+        goToNextQuestion();
+      } else if (e.key === 'ArrowLeft' || e.key === 'k') {
+        goToPrevQuestion();
       }
     });
-  }
-
-  function findCenterQuestionCard() {
-    var cards = document.querySelectorAll('.question-card');
-    var centerY = window.innerHeight / 2;
-    var closestCard = null;
-    var closestDistance = Infinity;
-
-    for (var i = 0; i < cards.length; i++) {
-      var rect = cards[i].getBoundingClientRect();
-      var cardCenter = rect.top + rect.height / 2;
-      var dist = Math.abs(cardCenter - centerY);
-      if (dist < closestDistance) {
-        closestDistance = dist;
-        closestCard = cards[i];
-      }
-    }
-    return closestCard;
   }
 
   window.TDV_QUIZ = {
@@ -1145,7 +1249,12 @@
     resetQuiz: resetQuiz,
     switchCategoryTab: switchCategoryTab,
     setQuizMode: setQuizMode,
+    setFilterView: setFilterView,
     scrollToQuestion: scrollToQuestion,
+    goToNextQuestion: goToNextQuestion,
+    goToPrevQuestion: goToPrevQuestion,
+    togglePassageCollapse: togglePassageCollapse,
+    toggleRevealAnswer: toggleRevealAnswer,
     openPaletteDrawer: openPaletteDrawer,
     closePaletteDrawer: closePaletteDrawer
   };

@@ -330,8 +330,8 @@
         <!-- Filter Bar sau khi nộp bài (Ẩn mặc định) -->
         <div class="result-filter-bar hidden" id="quiz-result-filter-bar">
           <span class="filter-label">Bộ lọc câu hỏi:</span>
-          <button type="button" class="result-filter-btn active" data-filter="all">Tất cả câu</button>
-          <button type="button" class="result-filter-btn filter-wrong" data-filter="wrong">
+          <button type="button" class="result-filter-btn active" data-filter="all" id="filter-btn-all">Tất cả câu</button>
+          <button type="button" class="result-filter-btn filter-wrong" data-filter="wrong" id="filter-btn-wrong">
             <svg class="ui-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"></circle>
               <line x1="15" y1="9" x2="9" y2="15"></line>
@@ -339,11 +339,19 @@
             </svg>
             <span>Chỉ xem câu sai</span>
           </button>
-          <button type="button" class="result-filter-btn filter-correct" data-filter="correct">
+          <button type="button" class="result-filter-btn filter-correct" data-filter="correct" id="filter-btn-correct">
             <svg class="ui-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
             <span>Chỉ xem câu đúng</span>
+          </button>
+          <button type="button" class="result-filter-btn filter-skipped" data-filter="skipped" id="filter-btn-skipped">
+            <svg class="ui-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span>Chưa làm</span>
           </button>
         </div>
 
@@ -371,30 +379,41 @@
             </button>
           </div>
         </div>
+
+        <!-- Floating Quick Navigation Bar on Mobile (Only active in quiz view) -->
+        <div class="mobile-floating-bar" id="mobile-floating-bar">
+          <button type="button" class="mobile-nav-btn" id="mobile-btn-prev" onclick="window.TDV_QUIZ.goToPrevQuestion()" title="Câu trước">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            <span>Trước</span>
+          </button>
+          <button type="button" class="mobile-nav-btn mobile-btn-palette" id="mobile-btn-palette" title="Bản đồ câu hỏi">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="7" height="7" x="3" y="3" rx="1"></rect>
+              <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+              <rect width="7" height="7" x="14" y="14" rx="1"></rect>
+              <rect width="7" height="7" x="3" y="14" rx="1"></rect>
+            </svg>
+            <span class="mobile-nav-counter" id="mobile-palette-progress">0/0</span>
+          </button>
+          <button type="button" class="mobile-nav-btn" id="mobile-btn-next" onclick="window.TDV_QUIZ.goToNextQuestion()" title="Câu sau">
+            <span>Sau</span>
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+          <button type="button" class="mobile-nav-btn mobile-btn-submit" id="mobile-btn-submit" onclick="window.TDV_QUIZ.submitQuiz()" title="Nộp bài">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Nộp bài</span>
+          </button>
+        </div>
       </div>
     </section>
 
   </main>
-
-  <!-- Mobile Floating Trigger -->
-  <div class="mobile-floating-bar" id="mobile-floating-bar">
-    <button type="button" class="mobile-btn" id="mobile-btn-palette">
-      <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect width="7" height="7" x="3" y="3" rx="1"></rect>
-        <rect width="7" height="7" x="14" y="3" rx="1"></rect>
-        <rect width="7" height="7" x="14" y="14" rx="1"></rect>
-        <rect width="7" height="7" x="3" y="14" rx="1"></rect>
-      </svg>
-      <span>Bản đồ:</span>
-      <strong id="mobile-palette-progress">0/0</strong>
-    </button>
-    <button type="button" class="mobile-btn mobile-btn-submit" onclick="window.TDV_QUIZ.submitQuiz()">
-      <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="20 6 9 17 4 12"></polyline>
-      </svg>
-      <span>Nộp bài</span>
-    </button>
-  </div>
 
   <!-- Question Map Palette Drawer -->
   <div class="palette-overlay" id="palette-overlay"></div>

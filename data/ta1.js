@@ -2018,7 +2018,10 @@ window.TDV_DATA.ta1 = [
     "readingPassage": "My name is James, I'm fourteen, and I moved to this town with my family three months\n\nago. My parents lived here when they were young, but my brother and I didn't know\n\nanyone here except a few aunts and uncles we'd met when we'd spent a couple of\n\nweeks with my grandparents, during school holidays. When I started school, one of my\n\ncousins, Sophie, who was in my class, was very friendly for the first week and I was\n\nhappy to have a friend in a strange place. Then, for no reason, she stopped talking to me\n\nand I felt very hurt and lonely for several weeks.\n\nIn the end I made some more friends and since I got to know them, I've been fine. Now\n\nSophie is having a disco party for her birthday next week and she has invited me. I don't\n\nwant to go. My brother says he heard someone say she only asked me because her\n\nparents said she had to. But my mum and dad say it would be rude not to accept. Some\n\nof my new friends are invited, too. How can I show Sophie that she can't behave so\n\nbadly towards me without causing a family quarrel?",
     "question": "30. Which of these is an answer to the text?",
     "options": [
-      "A. Ask your friends to come with you and we can all have a good time together."
+      "A. Ask your friends to come with you and we can all have a good time together.",
+      "B. You must go to the party and act as if you are pleased to be there.",
+      "C. Why not invite Sophie to your house and see what happens?",
+      "D. Tell Sophie you are busy that night and have to stay at home."
     ],
     "answer": 1,
     "explanation": "Đáp án chính xác là B dựa trên bài đọc James and Sophie."

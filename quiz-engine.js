@@ -35,7 +35,7 @@
       var gain = ctx.createGain();
       osc.type = type || 'sine';
       osc.frequency.setValueAtTime(freq, ctx.currentTime + (delay || 0));
-      gain.gain.setValueAtTime(0.08, ctx.currentTime + (delay || 0));
+      gain.gain.setValueAtTime(0.06, ctx.currentTime + (delay || 0));
       gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + (delay || 0) + duration);
       osc.connect(gain);
       gain.connect(ctx.destination);
@@ -45,27 +45,36 @@
   }
 
   function playCorrectSound() {
-    playTone(523.25, 'sine', 0.12, 0);       // C5
-    playTone(659.25, 'sine', 0.18, 0.08);    // E5
-    playTone(783.99, 'triangle', 0.25, 0.16);// G5
+    playTone(523.25, 'sine', 0.1, 0);
+    playTone(659.25, 'sine', 0.15, 0.08);
   }
 
   function playWrongSound() {
-    playTone(280, 'sawtooth', 0.15, 0);
-    playTone(220, 'sawtooth', 0.22, 0.1);
+    playTone(280, 'sine', 0.12, 0);
+    playTone(220, 'sine', 0.18, 0.08);
   }
 
   function playClickSound() {
-    playTone(440, 'sine', 0.04, 0);
+    playTone(400, 'sine', 0.03, 0);
   }
 
   function playCelebrationSound() {
     if (!soundEnabled) return;
-    var notes = [523.25, 659.25, 783.99, 1046.5];
+    var notes = [523.25, 659.25, 783.99];
     notes.forEach(function (f, idx) {
-      playTone(f, 'triangle', 0.35, idx * 0.1);
+      playTone(f, 'sine', 0.25, idx * 0.1);
     });
   }
+
+  // Icons SVG nội bộ
+  var SVG_ICONS = {
+    bookmark: '<svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>',
+    bookmarkFilled: '<svg class="btn-icon-svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>',
+    book: '<svg class="reading-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>',
+    inbox: '<svg class="empty-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>',
+    bell: '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>',
+    bellOff: '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.7 3A6 6 0 0 1 18 8a21.3 21.3 0 0 0 .6 5"></path><path d="M17 17H3s3-2 3-9a4.67 4.67 0 0 1 .3-1.7"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>'
+  };
 
   // Quản lý trạng thái hiện tại của phiên làm bài
   var currentState = {
@@ -77,7 +86,7 @@
     userAnswers: {},       // { [qIndex]: optIndex }
     bookmarked: {},        // { [qIndex]: true }
     isSubmitted: false,
-    mode: 'study',         // 'study' (Luyện tập tức thì) | 'exam' (Thi thử tính giờ)
+    mode: 'study',         // 'study' | 'exam'
     filterView: 'all',     // 'all' | 'wrong' | 'correct'
     timerSeconds: 0,
     timerInterval: null,
@@ -120,7 +129,6 @@
       return String(a).toLowerCase().trim();
     });
 
-    // Tầng 1: Data dạng Object { de1: [...], de2: [...] }
     if (!Array.isArray(rawData) && typeof rawData === 'object') {
       if (tabId === 'ontap') {
         return getRawQuestionsList(subjectId);
@@ -141,7 +149,6 @@
       return allQuestions;
     }
 
-    // Tầng 2: Lọc theo thuộc tính câu hỏi (tab, category, de, exam, part)
     var matchedByTag = [];
     var hasAnyTagInDataset = false;
 
@@ -161,7 +168,6 @@
       return matchedByTag;
     }
 
-    // Tầng 3 (Fallback): Chia đều câu hỏi cho các tab Đề 1, Đề 2, Giữa kỳ
     if (!hasAnyTagInDataset) {
       var numExamTabs = Math.max(1, (totalTabs || 4) - 1);
       var chunkSize = Math.ceil(allQuestions.length / numExamTabs);
@@ -173,7 +179,6 @@
     return matchedByTag;
   }
 
-  // Lấy đầy đủ 100% nội dung câu hỏi & bài đọc hiểu
   function getFullReadingAndQuestion(questionObj, allQuestionsInSubject) {
     if (!questionObj) {
       return { readingText: '', questionText: '' };
@@ -212,7 +217,6 @@
     };
   }
 
-  // Đồng hồ tính giờ cho Chế độ Thi thử
   function startTimer() {
     stopTimer();
     currentState.timerSeconds = 0;
@@ -243,7 +247,6 @@
     }
   }
 
-  // Quản lý lưu trữ trạng thái dở dang
   function getStorageKey() {
     if (!currentState.subjectId) return null;
     return 'TDV_SESSION_' + currentState.subjectId + '_' + currentState.activeTabId;
@@ -290,7 +293,6 @@
     }
   }
 
-  // Render Tabs danh mục
   function renderTabs(subjectConfig) {
     var tabsContainer = document.getElementById('quiz-category-tabs');
     if (!tabsContainer) return;
@@ -324,7 +326,6 @@
       });
     }
 
-    // Scroll active tab into view
     var activeBtn = tabsContainer.querySelector('.tab-btn.active');
     if (activeBtn && typeof activeBtn.scrollIntoView === 'function') {
       try {
@@ -333,7 +334,6 @@
     }
   }
 
-  // Cập nhật thanh tiến độ và thống kê nhanh
   function updateProgressStats() {
     var total = currentState.questions.length;
     var answeredCount = Object.keys(currentState.userAnswers).length;
@@ -349,7 +349,6 @@
     if (answeredCountEl) answeredCountEl.textContent = answeredCount;
     if (totalCountEl) totalCountEl.textContent = total;
 
-    // Mobile floating trigger
     var mobileProgress = document.getElementById('mobile-palette-progress');
     if (mobileProgress) {
       mobileProgress.textContent = answeredCount + '/' + total;
@@ -358,7 +357,6 @@
     renderPalette();
   }
 
-  // Render Bản đồ câu hỏi (Question Map / Palette)
   function renderPalette() {
     var container = document.getElementById('question-palette-grid');
     if (!container) return;
@@ -385,7 +383,7 @@
       html +=
         '<button type="button" class="palette-item ' + statusClass + bookmarkClass + '" data-q-index="' + i + '" title="Câu ' + (i + 1) + '">' +
           (i + 1) +
-          (isBookmarked ? '<span class="palette-bookmark-dot">★</span>' : '') +
+          (isBookmarked ? '<span class="palette-bookmark-indicator"></span>' : '') +
         '</button>';
     }
 
@@ -416,7 +414,6 @@
     }
   }
 
-  // Render toàn bộ danh sách câu hỏi
   function renderQuestions() {
     var container = document.getElementById('quiz-questions-container');
     var footer = document.getElementById('quiz-footer-actions');
@@ -426,7 +423,7 @@
     if (!questions || questions.length === 0) {
       container.innerHTML =
         '<div class="empty-quiz-state">' +
-          '<div class="empty-icon">📭</div>' +
+          '<div class="empty-icon-box">' + SVG_ICONS.inbox + '</div>' +
           '<h3>Chưa có câu hỏi nào trong phần này</h3>' +
           '<p>Hãy chọn một đề thi hoặc phần ôn tập khác từ danh sách bên trên.</p>' +
         '</div>';
@@ -447,7 +444,6 @@
       var isAnswered = selectedAns !== undefined;
       var isBookmarked = !!currentState.bookmarked[i];
 
-      // Lọc hiển thị sau khi nộp bài
       if (currentState.isSubmitted && currentState.filterView !== 'all') {
         var isCorrect = selectedAns === q.answer;
         if (currentState.filterView === 'wrong' && isCorrect) continue;
@@ -462,7 +458,8 @@
 
       html += '<div class="' + cardClasses.join(' ') + '" id="question-card-' + i + '" data-q-index="' + i + '">';
 
-      // Header thẻ câu hỏi (Số thứ tự + Nút Bookmark + Tag)
+      var bookmarkIcon = isBookmarked ? SVG_ICONS.bookmarkFilled : SVG_ICONS.bookmark;
+
       html +=
         '<div class="question-header-row">' +
           '<div class="question-number-badge">' +
@@ -472,35 +469,32 @@
           '<div class="question-actions">' +
             (q.chapter ? '<span class="question-chapter-chip">' + escapeHtml(q.chapter) + '</span>' : '') +
             '<button type="button" class="btn-bookmark ' + (isBookmarked ? 'active' : '') + '" data-q-index="' + i + '" title="Đánh dấu câu hỏi cần xem lại">' +
-              (isBookmarked ? '★ Đã đánh dấu' : '☆ Đánh dấu') +
+              bookmarkIcon +
+              '<span>' + (isBookmarked ? 'Đã đánh dấu' : 'Đánh dấu') + '</span>' +
             '</button>' +
           '</div>' +
         '</div>';
 
-      // Bài đọc hiểu / Đoạn văn (Reading passage)
       if (fullContent.readingText !== '') {
         html +=
           '<div class="reading-passage-box">' +
             '<div class="reading-passage-header">' +
-              '<span class="reading-icon">📖</span>' +
+              SVG_ICONS.book +
               '<span class="reading-passage-title">Đoạn văn đọc hiểu (Reading Passage)</span>' +
             '</div>' +
             '<div class="reading-passage-body">' + escapeHtml(fullContent.readingText) + '</div>' +
           '</div>';
       }
 
-      // Nội dung câu hỏi
       html +=
         '<div class="question-title-text">' + escapeHtml(fullContent.questionText) + '</div>';
 
-      // Danh sách lựa chọn đáp án
       html += '<div class="options-grid">';
       var options = q.options || q.choices || [];
       for (var optIdx = 0; optIdx < options.length; optIdx++) {
         var optClasses = ['option-item'];
         var isChecked = selectedAns === optIdx;
 
-        // Trạng thái theo Mode
         if (currentState.mode === 'study') {
           if (isAnswered) {
             if (optIdx === q.answer) {
@@ -512,7 +506,6 @@
             optClasses.push('selected');
           }
         } else {
-          // Exam mode
           if (!currentState.isSubmitted) {
             if (isChecked) optClasses.push('selected');
           } else {
@@ -535,7 +528,6 @@
       }
       html += '</div>';
 
-      // Giải thích đáp án (Hiển thị ngay ở Study mode khi đã chọn, hoặc ở Exam mode sau khi nộp)
       var showExplanation = (currentState.mode === 'study' && isAnswered) || currentState.isSubmitted;
       if (showExplanation && (q.explanation || q.answer !== undefined)) {
         var correctOptionText = (options[q.answer] !== undefined) ? options[q.answer] : '';
@@ -554,7 +546,6 @@
 
     container.innerHTML = html;
 
-    // Gắn sự kiện chọn đáp án
     var optionNodes = container.querySelectorAll('.option-item');
     for (var k = 0; k < optionNodes.length; k++) {
       optionNodes[k].addEventListener('click', function () {
@@ -564,7 +555,6 @@
       });
     }
 
-    // Gắn sự kiện Bookmark
     var bookmarkBtns = container.querySelectorAll('.btn-bookmark');
     for (var b = 0; b < bookmarkBtns.length; b++) {
       bookmarkBtns[b].addEventListener('click', function (e) {
@@ -577,11 +567,9 @@
     updateProgressStats();
   }
 
-  // Chọn đáp án
   function selectAnswer(qIndex, optIndex) {
     if (currentState.isSubmitted && currentState.mode === 'exam') return;
 
-    var isFirstSelect = currentState.userAnswers[qIndex] === undefined;
     currentState.userAnswers[qIndex] = optIndex;
 
     var q = currentState.questions[qIndex];
@@ -597,12 +585,10 @@
 
     saveProgress();
 
-    // Trong study mode, cần re-render thẻ câu hỏi đó để hiện đáp án đúng và giải thích
     if (currentState.mode === 'study') {
       renderSingleQuestionCard(qIndex);
       updateProgressStats();
     } else {
-      // Exam mode: chỉ cập nhật UI chọn lựa nhanh chóng mà không re-render toàn bộ
       updateOptionSelectionInDOM(qIndex, optIndex);
       updateProgressStats();
     }
@@ -643,6 +629,8 @@
       cardClasses.push(selectedAns === q.answer ? 'card-status-correct' : 'card-status-wrong');
     }
 
+    var bookmarkIcon = isBookmarked ? SVG_ICONS.bookmarkFilled : SVG_ICONS.bookmark;
+
     var html =
       '<div class="question-header-row">' +
         '<div class="question-number-badge">' +
@@ -652,7 +640,8 @@
         '<div class="question-actions">' +
           (q.chapter ? '<span class="question-chapter-chip">' + escapeHtml(q.chapter) + '</span>' : '') +
           '<button type="button" class="btn-bookmark ' + (isBookmarked ? 'active' : '') + '" data-q-index="' + qIndex + '" title="Đánh dấu câu hỏi cần xem lại">' +
-            (isBookmarked ? '★ Đã đánh dấu' : '☆ Đánh dấu') +
+            bookmarkIcon +
+            '<span>' + (isBookmarked ? 'Đã đánh dấu' : 'Đánh dấu') + '</span>' +
           '</button>' +
         '</div>' +
       '</div>';
@@ -661,7 +650,7 @@
       html +=
         '<div class="reading-passage-box">' +
           '<div class="reading-passage-header">' +
-            '<span class="reading-icon">📖</span>' +
+            SVG_ICONS.book +
             '<span class="reading-passage-title">Đoạn văn đọc hiểu (Reading Passage)</span>' +
           '</div>' +
           '<div class="reading-passage-body">' + escapeHtml(fullContent.readingText) + '</div>' +
@@ -712,7 +701,6 @@
     oldCard.className = cardClasses.join(' ');
     oldCard.innerHTML = html;
 
-    // Gắn lại sự kiện cho các lựa chọn mới tạo
     var newOptions = oldCard.querySelectorAll('.option-item');
     for (var k = 0; k < newOptions.length; k++) {
       newOptions[k].addEventListener('click', function () {
@@ -730,7 +718,6 @@
     }
   }
 
-  // Đánh dấu bookmark
   function toggleBookmark(qIndex) {
     playClickSound();
     if (currentState.bookmarked[qIndex]) {
@@ -742,18 +729,19 @@
 
     var card = document.getElementById('question-card-' + qIndex);
     if (card) {
-      card.classList.toggle('is-bookmarked', !!currentState.bookmarked[qIndex]);
+      var isMarked = !!currentState.bookmarked[qIndex];
+      card.classList.toggle('is-bookmarked', isMarked);
       var btn = card.querySelector('.btn-bookmark');
       if (btn) {
-        btn.classList.toggle('active', !!currentState.bookmarked[qIndex]);
-        btn.innerHTML = currentState.bookmarked[qIndex] ? '★ Đã đánh dấu' : '☆ Đánh dấu';
+        btn.classList.toggle('active', isMarked);
+        btn.innerHTML = (isMarked ? SVG_ICONS.bookmarkFilled : SVG_ICONS.bookmark) +
+          '<span>' + (isMarked ? 'Đã đánh dấu' : 'Đánh dấu') + '</span>';
       }
     }
 
     renderPalette();
   }
 
-  // Nộp bài thi
   function submitQuiz() {
     if (!currentState.questions || currentState.questions.length === 0) return;
 
@@ -788,7 +776,6 @@
     renderQuestions();
   }
 
-  // Modal kết quả thi cử chuyên nghiệp
   function showResultModal(score10, percent, correctCount, total, answeredCount, unansweredCount) {
     var modal = document.getElementById('result-modal');
     if (!modal) return;
@@ -796,19 +783,19 @@
     var badgeText = 'Hoàn thành bài thi';
     var badgeClass = 'rank-good';
     if (score10 >= 9.0) {
-      badgeText = 'Xuất sắc! 🎉';
+      badgeText = 'Xuất sắc';
       badgeClass = 'rank-excellent';
     } else if (score10 >= 8.0) {
-      badgeText = 'Giỏi! 🌟';
+      badgeText = 'Giỏi';
       badgeClass = 'rank-great';
     } else if (score10 >= 6.5) {
-      badgeText = 'Khá 👍';
+      badgeText = 'Khá';
       badgeClass = 'rank-good';
     } else if (score10 >= 5.0) {
-      badgeText = 'Trung bình / Đạt 📝';
+      badgeText = 'Trung bình / Đạt';
       badgeClass = 'rank-pass';
     } else {
-      badgeText = 'Cần ôn luyện thêm 💪';
+      badgeText = 'Cần ôn luyện thêm';
       badgeClass = 'rank-fail';
     }
 
@@ -834,7 +821,6 @@
     modal.classList.remove('hidden');
     modal.classList.add('active');
 
-    // Hiện filter bar câu hỏi sai/đúng trên trang
     var filterBar = document.getElementById('quiz-result-filter-bar');
     if (filterBar) filterBar.classList.remove('hidden');
   }
@@ -847,7 +833,6 @@
     }
   }
 
-  // Làm lại từ đầu (Reset)
   function resetQuiz(silent) {
     if (!silent) {
       var confirmReset = window.confirm('Bạn có muốn làm lại từ đầu bộ câu hỏi này không?');
@@ -878,7 +863,6 @@
     }
   }
 
-  // Đảo ngẫu nhiên câu hỏi
   function toggleShuffle() {
     playClickSound();
     currentState.isShuffled = !currentState.isShuffled;
@@ -887,7 +871,6 @@
     if (btn) btn.classList.toggle('active', currentState.isShuffled);
 
     if (currentState.isShuffled) {
-      // Fisher-Yates shuffle
       var arr = currentState.originalQuestions.slice();
       for (var i = arr.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -906,7 +889,6 @@
     renderQuestions();
   }
 
-  // Chuyển đổi giữa Chế độ Luyện tập (Study) & Thi thử (Exam)
   function setQuizMode(mode) {
     if (currentState.mode === mode) return;
     playClickSound();
@@ -930,7 +912,6 @@
     renderQuestions();
   }
 
-  // Chuyển đổi tab đề / chuyên mục
   function switchCategoryTab(tabId, tabIndex) {
     var subjectConfig = window.TDV_CONFIG.getSubjectById(currentState.subjectId);
     if (!subjectConfig) return;
@@ -952,7 +933,6 @@
     currentState.originalQuestions = rawQuestions.slice();
     currentState.questions = rawQuestions.slice();
 
-    // Khôi phục tiến độ đã lưu nếu có
     var saved = loadProgress();
     if (saved && saved.answers) {
       currentState.userAnswers = saved.answers || {};
@@ -985,7 +965,6 @@
     }
   }
 
-  // Mở một môn học (100% Hoàn toàn miễn phí, không khóa, không điều kiện!)
   function openSubject(subjectId, initialTabId) {
     var subjectConfig = window.TDV_CONFIG.getSubjectById(subjectId);
     if (!subjectConfig) return;
@@ -994,7 +973,6 @@
     var tabs = subjectConfig.tabs || window.TDV_CONFIG.DEFAULT_TABS;
     var targetTabId = initialTabId || tabs[0].id;
 
-    // Cập nhật giao diện Header môn học
     var titleEl = document.getElementById('quiz-subject-title');
     var codeEl = document.getElementById('quiz-subject-code');
     var descEl = document.getElementById('quiz-subject-desc');
@@ -1023,7 +1001,6 @@
     switchCategoryTab(targetTabId, targetIndex);
   }
 
-  // Điều khiển Drawer bản đồ câu hỏi
   function openPaletteDrawer() {
     playClickSound();
     var drawer = document.getElementById('palette-drawer');
@@ -1040,7 +1017,19 @@
     if (overlay) overlay.classList.remove('open');
   }
 
-  // Khởi tạo các sự kiện toàn cục của Quiz Engine
+  function updateSoundButtonDisplay() {
+    var btnSoundToggle = document.getElementById('btn-sound-toggle');
+    if (!btnSoundToggle) return;
+    var iconSlot = document.getElementById('sound-icon-slot');
+    var textSlot = document.getElementById('sound-toggle-text');
+    if (iconSlot) {
+      iconSlot.innerHTML = soundEnabled ? SVG_ICONS.bell : SVG_ICONS.bellOff;
+    }
+    if (textSlot) {
+      textSlot.textContent = soundEnabled ? 'Âm thanh: Bật' : 'Âm thanh: Tắt';
+    }
+  }
+
   function init() {
     var btnSubmit = document.getElementById('btn-submit-quiz');
     var btnReset = document.getElementById('btn-reset-quiz');
@@ -1050,13 +1039,11 @@
     if (btnReset) btnReset.addEventListener('click', function () { resetQuiz(false); });
     if (btnShuffle) btnShuffle.addEventListener('click', toggleShuffle);
 
-    // Mode Buttons
     var btnStudy = document.getElementById('btn-mode-study');
     var btnExam = document.getElementById('btn-mode-exam');
     if (btnStudy) btnStudy.addEventListener('click', function () { setQuizMode('study'); });
     if (btnExam) btnExam.addEventListener('click', function () { setQuizMode('exam'); });
 
-    // Drawer Palette triggers
     var btnOpenPalette = document.getElementById('btn-open-palette');
     var btnClosePalette = document.getElementById('btn-close-palette');
     var paletteOverlay = document.getElementById('palette-overlay');
@@ -1067,7 +1054,6 @@
     if (btnClosePalette) btnClosePalette.addEventListener('click', closePaletteDrawer);
     if (paletteOverlay) paletteOverlay.addEventListener('click', closePaletteDrawer);
 
-    // Modal Results buttons
     var btnModalClose = document.getElementById('btn-modal-close');
     var btnModalReview = document.getElementById('btn-modal-review');
     var btnModalRetry = document.getElementById('btn-modal-retry');
@@ -1090,7 +1076,6 @@
       if (window.TDV_NAV) window.TDV_NAV.goHome();
     });
 
-    // Result Filter Bar buttons
     var filterBtns = document.querySelectorAll('.result-filter-btn');
     filterBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -1102,10 +1087,9 @@
       });
     });
 
-    // Sound toggle button
     var btnSoundToggle = document.getElementById('btn-sound-toggle');
     if (btnSoundToggle) {
-      btnSoundToggle.textContent = soundEnabled ? '🔔 Âm thanh: Bật' : '🔕 Âm thanh: Tắt';
+      updateSoundButtonDisplay();
       btnSoundToggle.addEventListener('click', function () {
         soundEnabled = !soundEnabled;
         try {
@@ -1113,17 +1097,15 @@
             window.localStorage.setItem('TDV_SOUND_ENABLED', soundEnabled ? 'true' : 'false');
           }
         } catch (e) {}
-        btnSoundToggle.textContent = soundEnabled ? '🔔 Âm thanh: Bật' : '🔕 Âm thanh: Tắt';
+        updateSoundButtonDisplay();
         if (soundEnabled) playClickSound();
       });
     }
 
-    // Hotkey navigation
     document.addEventListener('keydown', function (e) {
       if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
       if (document.getElementById('view-quiz').classList.contains('hidden')) return;
 
-      // 1, 2, 3, 4 -> Chọn đáp án A, B, C, D cho câu hỏi đang focus
       if (['1', '2', '3', '4'].indexOf(e.key) !== -1) {
         var opt = parseInt(e.key, 10) - 1;
         var centerCard = findCenterQuestionCard();

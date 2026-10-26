@@ -88,7 +88,7 @@
     { id: 'ontap', label: 'Tổng hợp toàn bộ kiến thức (117 câu)', aliases: ['all', 'tonghop', 'cuoiky'] }
   ];
 
-  // DANH MỤC 6 MÔN HỌC - HOÀN TOÀN MIỄN PHÍ, MỞ KHÓA 100%
+  // DANH MỤC 6 MÔN HỌC - BẢNG MÀU THANH LỊCH, TINH TẾ
   var SUBJECTS_CONFIG = [
     {
       id: 'ta1',
@@ -99,7 +99,6 @@
       examTypes: ['giuaky', 'cuoiky'],
       icon: 'globe',
       color: '#3b82f6',
-      badgeGradient: 'from-blue-500 to-indigo-600',
       description: 'Trọn bộ tài liệu Học phần 1: Đề cương Review Final, Đọc hiểu 100%, Đục lỗ, Biển báo giao tiếp, Ngữ pháp - Từ vựng và Phần nghe.',
       tags: ['Đề cương Review (56)', 'Đọc hiểu 100% (25)', 'Đục lỗ (50)', 'Biển báo (43)', 'Ngữ pháp (93)', 'Luyện nghe (23)'],
       tabs: TA1_TABS
@@ -112,8 +111,7 @@
       phaseType: 'final',
       examTypes: ['cuoiky'],
       icon: 'book',
-      color: '#ef4444',
-      badgeGradient: 'from-red-500 to-rose-600',
+      color: '#475569',
       description: 'Ngân hàng đề thi trắc nghiệm kết thúc học phần đầy đủ 7 chương lý luận chính trị và đề thi chuẩn.',
       tags: ['Đề 1 Cuối Kì (40)', 'Đề 2 Cuối Kì (40)', '7 Chương lý luận (302)'],
       tabs: CNXH_TABS
@@ -126,8 +124,7 @@
       phaseType: 'final',
       examTypes: ['cuoiky'],
       icon: 'trending-up',
-      color: '#06b6d4',
-      badgeGradient: 'from-cyan-500 to-teal-600',
+      color: '#0284c7',
       description: 'GDP, lạm phát, thất nghiệp, chính sách tài khóa, chính sách tiền tệ và cán cân thanh toán quốc tế.',
       tags: ['Đề 1 Chuẩn thi', 'Đề 2 Chuẩn thi', 'Giữa kỳ', 'Ôn tập 398 câu'],
       tabs: DEFAULT_TABS
@@ -140,8 +137,7 @@
       phaseType: 'midterm',
       examTypes: ['giuaky', 'cuoiky'],
       icon: 'bar-chart',
-      color: '#8b5cf6',
-      badgeGradient: 'from-purple-500 to-violet-600',
+      color: '#6366f1',
       description: 'Lý thuyết cung cầu, độ co giãn, lý thuyết hành vi người tiêu dùng, chi phí sản xuất & các cấu trúc thị trường.',
       tags: ['Giữa kỳ lần 1 (30)', 'Giữa kỳ lần 2 (30)', 'Ôn tập trọng tâm (30)', 'Tổng hợp (117)'],
       tabs: KTVM_TABS
@@ -154,8 +150,7 @@
       phaseType: 'final',
       examTypes: ['cuoiky'],
       icon: 'award',
-      color: '#f59e0b',
-      badgeGradient: 'from-amber-500 to-orange-600',
+      color: '#0d9488',
       description: 'Học phần văn hóa doanh nghiệp, triết lý kinh doanh, phong cách lãnh đạo và đạo đức nghề nghiệp.',
       tags: ['Khái luận VHKD', 'Triết lý Kinh doanh', 'Đạo đức & Trách nhiệm Xã hội', 'Tổng hợp 142 câu'],
       tabs: DEFAULT_TABS
@@ -168,8 +163,7 @@
       phaseType: 'final',
       examTypes: ['cuoiky'],
       icon: 'briefcase',
-      color: '#10b981',
-      badgeGradient: 'from-emerald-500 to-teal-600',
+      color: '#059669',
       description: 'Trọn bộ 55 câu trắc nghiệm bám sát đề cương 100%, nghiên cứu thị trường, kỹ thuật và tài chính dự án.',
       tags: ['Chương 1 & 2: Tổng quan (15)', 'Chương 3: Căn cứ & Thị trường (20)', 'Trắc nghiệm Thực hành (20)'],
       tabs: LPDA_TABS

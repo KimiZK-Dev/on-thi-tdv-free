@@ -1,0 +1,22 @@
+{
+  "name": "on-thi-tdv",
+  "version": "1.0.0",
+  "description": "> **Nền tảng ôn thi trắc nghiệm trực tuyến 100% Miễn Phí — Không cần tài khoản, không cần mã kích hoạt!**",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KimiZK-Dev/on-thi-tdv-free.git"
+  },
+  "keywords": [],
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/KimiZK-Dev/on-thi-tdv-free/issues"
+  },
+  "homepage": "https://github.com/KimiZK-Dev/on-thi-tdv-free#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0"
+  }
+}

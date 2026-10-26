@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <title>Ôn Thi TDV Free - Ngân Hàng Đề Thi Trắc Nghiệm Miễn Phí 100%</title>
+  <meta name="description" content="Nền tảng ôn thi trắc nghiệm TDV hoàn toàn miễn phí, không cần đăng nhập hay kích hoạt. Hơn 1.380 câu hỏi chuẩn xác, có đáp án và giải thích chi tiết." />
+  <meta name="keywords" content="ôn thi tdv, trắc nghiệm tdv, tiếng anh 1, kinh tế vi mô, kinh tế vĩ mô, lập dự án đầu tư, văn hóa kinh doanh, chủ nghĩa xã hội khoa học" />
+  <meta name="theme-color" content="#0b0f19" />
+  
+  <!-- OpenGraph Meta Tags -->
+  <meta property="og:title" content="Ôn Thi TDV Free - Ngân Hàng Đề Thi Trắc Nghiệm Miễn Phí" />
+  <meta property="og:description" content="Truy cập và làm bài ngay không cần tài khoản hay mã kích hoạt. Tương thích mọi thiết bị di động, máy tính bảng và máy tính." />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header chính toàn trang -->
+  <header class="app-header" id="app-header">
+    <div class="header-container">
+      <div class="brand-container" id="btn-brand-home" role="button" tabindex="0" title="Về trang chủ">
+        <div class="brand-logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+          </svg>
+        </div>
+        <div class="brand-text-group">
+          <div class="brand-title">
+            <span class="brand-name">Ôn Thi TDV</span>
+            <span class="brand-free-badge">FREE</span>
+          </div>
+          <span class="brand-sub">Kho Luyện Thi Trắc Nghiệm Mở</span>
+        </div>
+      </div>
+
+      <nav class="header-actions">
+        <button type="button" class="btn-header-link" id="btn-header-home">
+          <span class="icon">🏠</span>
+          <span class="label">Trang chủ</span>
+        </button>
+        <button type="button" class="btn-header-control" id="btn-sound-toggle" title="Bật/Tắt âm thanh thông báo">
+          🔔 Âm thanh: Bật
+        </button>
+        <button type="button" class="btn-theme-toggle" id="btn-theme-toggle" title="Chuyển chế độ sáng/tối">
+          <span class="theme-icon">☀️</span>
+          <span class="theme-text">Giao diện sáng</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- NỘI DUNG CHÍNH (SPA Views) -->
+  <main class="app-main">
+
+    <!-- VIEW 1: TRANG CHỦ (Home View) -->
+    <section class="view-section" id="view-home">
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <div class="hero-container">
+          <div class="hero-pill-badge">
+            <span class="pill-dot"></span>
+            <span>Mở khóa 100% Miễn phí — Không cần đăng nhập hay mua mã</span>
+          </div>
+          <h1 class="hero-heading">
+            Luyện Thi Trắc Nghiệm <span class="gradient-text">Chuẩn Xác & Hiệu Quả</span>
+          </h1>
+          <p class="hero-description">
+            Truy cập tức thì vào ngân hàng câu hỏi đầy đủ các môn học đại cương và chuyên ngành. 
+            Tích hợp chế độ luyện tập có giải thích tức thì và chế độ thi thử tính giờ sát thực tế.
+          </p>
+
+          <!-- Quick Stats Row -->
+          <div class="hero-stats-grid">
+            <div class="stat-card">
+              <div class="stat-number gradient-text" id="hero-stat-subjects">6 môn</div>
+              <div class="stat-label">Học phần trọng tâm</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number gradient-text" id="hero-stat-questions">1.384+</div>
+              <div class="stat-label">Câu hỏi có đáp án</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number gradient-text">0đ</div>
+              <div class="stat-label">Hoàn toàn miễn phí</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number gradient-text">2 Chế độ</div>
+              <div class="stat-label">Luyện tập & Thi thử</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search & Filter Controls -->
+      <div class="filter-section">
+        <div class="filter-container">
+          <div class="search-input-wrapper">
+            <span class="search-icon">🔍</span>
+            <input 
+              type="text" 
+              id="subject-search-input" 
+              class="subject-search-input" 
+              placeholder="Tìm kiếm theo tên môn, mã môn (vd: Tiếng Anh, VIMO, CNXH, LPDA...)"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="filter-controls-group">
+            <div class="phase-filters" role="tablist">
+              <button type="button" class="phase-filter-btn active" data-phase="all">Tất cả môn học</button>
+              <button type="button" class="phase-filter-btn" data-phase="midterm">Học phần Giữa kỳ</button>
+              <button type="button" class="phase-filter-btn" data-phase="final">Học phần Cuối kỳ</button>
+            </div>
+            <div class="found-counter-badge" id="subjects-found-count">6 môn học</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course Cards Grid -->
+      <div class="subjects-section">
+        <div class="subjects-container">
+          <div class="subject-grid" id="subject-grid">
+            <!-- Dynamic Subject Cards Rendered by navigation.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Highlights -->
+      <div class="features-section">
+        <div class="features-container">
+          <div class="features-header">
+            <h2 class="features-title">Tại sao nên luyện thi cùng Ôn Thi TDV?</h2>
+            <p class="features-sub">Nền tảng được tối ưu hóa cho trải nghiệm học tập tập trung, không phân tâm</p>
+          </div>
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">⚡</div>
+              <h3 class="feature-name">Truy cập tức thì</h3>
+              <p class="feature-desc">Không đăng nhập, không mật khẩu, không quảng cáo chen ngang. Vào web là chọn môn làm bài ngay.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🎯</div>
+              <h3 class="feature-name">2 Chế độ linh hoạt</h3>
+              <p class="feature-desc">Chế độ <strong>Luyện tập</strong> (xem giải thích và đáp án tức thì) và chế độ <strong>Thi thử</strong> (bấm giờ, chấm điểm hệ 10 chuẩn xác).</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🗺️</div>
+              <h3 class="feature-name">Bản đồ câu hỏi & Đánh dấu</h3>
+              <p class="feature-desc">Dễ dàng theo dõi tiến độ, nhảy nhanh đến câu chưa làm và gắn cờ các câu khó để xem lại sau.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">📱</div>
+              <h3 class="feature-name">Tương thích mọi thiết bị</h3>
+              <p class="feature-desc">Thiết kế responsive hoàn hảo trên điện thoại iPhone/Android, iPad/máy tính bảng và máy tính để bàn.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: LÀM BÀI THI / LUYỆN ĐỀ (Quiz View) -->
+    <section class="view-section hidden" id="view-quiz">
+      <div class="quiz-view-container">
+        <!-- Quiz Navigation Header -->
+        <div class="quiz-top-bar">
+          <button type="button" class="btn-back-home" id="btn-quiz-home">
+            <span class="icon">&larr;</span>
+            <span class="label">Danh sách môn</span>
+          </button>
+
+          <div class="quiz-subject-header-info">
+            <div class="quiz-subject-tags-row">
+              <span class="quiz-subject-code-chip" id="quiz-subject-code">TA1</span>
+              <span class="badge-phase badge-midterm" id="quiz-subject-phase">Giữa kỳ & Cuối kỳ</span>
+            </div>
+            <h1 class="quiz-subject-heading" id="quiz-subject-title">Tiếng Anh 1</h1>
+            <p class="quiz-subject-desc-line" id="quiz-subject-desc"></p>
+          </div>
+
+          <div class="quiz-top-actions">
+            <!-- Mode Switcher -->
+            <div class="mode-switcher-pill" role="group" aria-label="Chế độ làm bài">
+              <button type="button" class="btn-mode active" id="btn-mode-study" title="Hiện đáp án và giải thích ngay khi chọn">
+                💡 Luyện tập
+              </button>
+              <button type="button" class="btn-mode" id="btn-mode-exam" title="Bấm giờ và chỉ tính điểm khi nộp bài">
+                ⏱️ Thi thử
+              </button>
+            </div>
+
+            <!-- Timer (Hiện trong Exam mode) -->
+            <div class="quiz-timer-pill hidden" id="quiz-timer-container">
+              <span class="timer-icon">⏳</span>
+              <span class="timer-value" id="quiz-timer">00:00</span>
+            </div>
+
+            <!-- Nút mở Drawer Bản đồ câu hỏi -->
+            <button type="button" class="btn-action-palette" id="btn-open-palette" title="Xem bản đồ toàn bộ câu hỏi">
+              <span class="icon">🧭</span>
+              <span class="label">Bản đồ câu</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Category / Exam Tabs (Cuộn ngang) -->
+        <div class="quiz-tabs-wrapper">
+          <div class="quiz-category-tabs" id="quiz-category-tabs" role="tablist">
+            <!-- Dynamic Tabs Rendered by quiz-engine.js -->
+          </div>
+        </div>
+
+        <!-- Thanh công cụ & Tiến độ thi cử -->
+        <div class="quiz-toolbar-sticky">
+          <div class="quiz-progress-row">
+            <div class="progress-info-group">
+              <span class="progress-title">Tiến độ làm bài:</span>
+              <strong class="progress-fraction">
+                <span id="quiz-answered-count">0</span> / <span id="quiz-total-count">0</span> câu
+              </strong>
+              <span class="progress-percentage-pill" id="quiz-progress-text">0%</span>
+            </div>
+
+            <div class="quiz-quick-tools">
+              <button type="button" class="btn-tool" id="btn-shuffle-questions" title="Xáo trộn thứ tự câu hỏi để luyện tập">
+                🔀 Đảo câu hỏi
+              </button>
+              <button type="button" class="btn-tool btn-tool-reset" id="btn-reset-quiz" title="Xóa toàn bộ câu trả lời để làm lại">
+                🔄 Làm lại
+              </button>
+              <button type="button" class="btn-tool btn-tool-submit" id="btn-submit-quiz" title="Nộp bài và chấm điểm">
+                ✅ Nộp bài thi
+              </button>
+            </div>
+          </div>
+          <div class="quiz-progress-bar-track">
+            <div class="quiz-progress-bar-fill" id="quiz-progress-bar-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Filter Bar sau khi nộp bài (Ẩn mặc định) -->
+        <div class="result-filter-bar hidden" id="quiz-result-filter-bar">
+          <span class="filter-label">Bộ lọc câu hỏi:</span>
+          <button type="button" class="result-filter-btn active" data-filter="all">Tất cả câu</button>
+          <button type="button" class="result-filter-btn filter-wrong" data-filter="wrong">❌ Chỉ xem câu sai</button>
+          <button type="button" class="result-filter-btn filter-correct" data-filter="correct">✔️ Chỉ xem câu đúng</button>
+        </div>
+
+        <!-- Danh sách thẻ câu hỏi -->
+        <div class="quiz-questions-container" id="quiz-questions-container">
+          <!-- Dynamic Questions Rendered by quiz-engine.js -->
+        </div>
+
+        <!-- Footer Actions khi cuộn xuống dưới cùng -->
+        <div class="quiz-bottom-actions hidden" id="quiz-footer-actions">
+          <div class="bottom-actions-container">
+            <button type="button" class="btn-footer-reset" onclick="window.TDV_QUIZ.resetQuiz(false)">
+              🔄 Làm lại từ đầu
+            </button>
+            <button type="button" class="btn-footer-submit" onclick="window.TDV_QUIZ.submitQuiz()">
+              🏁 Nộp bài và xem điểm số
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mobile Floating Trigger -->
+  <div class="mobile-floating-bar" id="mobile-floating-bar">
+    <button type="button" class="mobile-btn" id="mobile-btn-palette">
+      <span>🧭 Bản đồ:</span>
+      <strong id="mobile-palette-progress">0/0</strong>
+    </button>
+    <button type="button" class="mobile-btn mobile-btn-submit" onclick="window.TDV_QUIZ.submitQuiz()">
+      <span>✅ Nộp bài</span>
+    </button>
+  </div>
+
+  <!-- Question Map Palette Drawer -->
+  <div class="palette-overlay" id="palette-overlay"></div>
+  <aside class="palette-drawer" id="palette-drawer" aria-label="Bản đồ câu hỏi">
+    <div class="palette-drawer-header">
+      <div class="palette-title-group">
+        <h3 class="palette-title">Bản đồ câu hỏi</h3>
+        <p class="palette-sub">Bấm vào số câu để chuyển đến câu tương ứng</p>
+      </div>
+      <button type="button" class="btn-close-palette" id="btn-close-palette" aria-label="Đóng bản đồ">✕</button>
+    </div>
+
+    <div class="palette-legend">
+      <div class="legend-item"><span class="legend-dot status-answered"></span> Đã làm</div>
+      <div class="legend-item"><span class="legend-dot status-unanswered"></span> Chưa làm</div>
+      <div class="legend-item"><span class="legend-dot status-correct"></span> Đúng</div>
+      <div class="legend-item"><span class="legend-dot status-wrong"></span> Sai</div>
+      <div class="legend-item"><span class="legend-star">★</span> Đánh dấu</div>
+    </div>
+
+    <div class="palette-grid-wrapper">
+      <div class="question-palette-grid" id="question-palette-grid">
+        <!-- Buttons 1..N rendered by quiz-engine.js -->
+      </div>
+    </div>
+  </aside>
+
+  <!-- Modal Kết Quả Thi Cử (Result Modal) -->
+  <div class="modal-overlay hidden" id="result-modal">
+    <div class="modal-card">
+      <button type="button" class="modal-close-icon" id="btn-modal-close" aria-label="Đóng">✕</button>
+      
+      <div class="modal-header">
+        <div class="modal-trophy-icon">🏆</div>
+        <h2 class="modal-title">Kết Quả Bài Thi</h2>
+        <div class="modal-rank-badge" id="modal-rank-badge">Xuất sắc!</div>
+      </div>
+
+      <div class="modal-score-box">
+        <div class="score-main">
+          <span class="score-number" id="modal-score-value">9.2</span>
+          <span class="score-max">/ 10</span>
+        </div>
+        <div class="score-percentage-tag" id="modal-score-percent">92%</div>
+      </div>
+
+      <div class="modal-stats-grid">
+        <div class="modal-stat-item stat-green">
+          <div class="modal-stat-value" id="modal-stat-correct">0</div>
+          <div class="modal-stat-name">Câu đúng</div>
+        </div>
+        <div class="modal-stat-item stat-red">
+          <div class="modal-stat-value" id="modal-stat-wrong">0</div>
+          <div class="modal-stat-name">Câu sai</div>
+        </div>
+        <div class="modal-stat-item stat-yellow">
+          <div class="modal-stat-value" id="modal-stat-skipped">0</div>
+          <div class="modal-stat-name">Chưa làm</div>
+        </div>
+        <div class="modal-stat-item stat-blue">
+          <div class="modal-stat-value" id="modal-stat-time">00:00</div>
+          <div class="modal-stat-name">Thời gian</div>
+        </div>
+      </div>
+
+      <div class="modal-actions-list">
+        <button type="button" class="btn-modal-action btn-modal-primary" id="btn-modal-review">
+          🔍 Xem chi tiết bài làm & lời giải
+        </button>
+        <button type="button" class="btn-modal-action btn-modal-secondary" id="btn-modal-retry">
+          🔄 Làm lại bài thi này
+        </button>
+        <button type="button" class="btn-modal-action btn-modal-tertiary" id="btn-modal-change">
+          🏠 Quay về chọn môn khác
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer trang web -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <strong>Ôn Thi TDV Free</strong> &bull; Nền tảng học và thi trắc nghiệm trực tuyến mở
+      </div>
+      <div class="footer-note">
+        Kho dữ liệu 6 môn học &bull; 1.384 câu hỏi &bull; Phát triển vì cộng đồng sinh viên
+      </div>
+    </div>
+  </footer>
+
+  <!-- DỮ LIỆU CÂU HỎI & LOGIC ỨNG DỤNG (Thứ tự nạp quan trọng) -->
+  <script src="config.js"></script>
+  <script src="data/cnxh.js"></script>
+  <script src="data/ktvm.js"></script>
+  <script src="data/lpda.js"></script>
+  <script src="data/ta1.js"></script>
+  <script src="data/vhkd.js"></script>
+  <script src="data/vimo.js"></script>
+  <script src="quiz-engine.js"></script>
+  <script src="navigation.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

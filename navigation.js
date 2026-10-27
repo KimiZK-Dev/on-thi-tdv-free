@@ -66,7 +66,8 @@
     'trending-up': '<svg class="subject-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>',
     'bar-chart': '<svg class="subject-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>',
     award: '<svg class="subject-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>',
-    briefcase: '<svg class="subject-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>'
+    briefcase: '<svg class="subject-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>',
+    'file-text': '<svg class="subject-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>'
   };
 
   var META_ICONS = {
@@ -84,7 +85,7 @@
       : [];
 
     var searchInput = document.getElementById('subject-search-input');
-    var activeKeyword = searchInput ? searchInput.value.trim() : currentSearchKeyword;
+    var activeKeyword = (searchInput && typeof searchInput.value === 'string') ? searchInput.value.trim() : (currentSearchKeyword || '');
 
     var filtered = allSubjects.filter(function (sub) {
       if (currentFilterPhase === 'midterm' && sub.phaseType !== 'midterm') return false;
@@ -109,7 +110,7 @@
           '<div class="empty-icon-box">' + META_ICONS.search + '</div>' +
           '<h3>Không tìm thấy môn học phù hợp</h3>' +
           '<p>Hãy thử tìm kiếm với từ khóa khác hoặc bấm nút bên dưới để xem toàn bộ danh mục.</p>' +
-          '<button type="button" class="btn-clear-filter" onclick="window.TDV_NAV.goHome()">Xem tất cả 6 môn học</button>' +
+          '<button type="button" class="btn-clear-filter" onclick="window.TDV_NAV.goHome()">Xem tất cả ' + allSubjects.length + ' môn học</button>' +
         '</div>';
       return;
     }
@@ -218,4 +219,4 @@
     setPhaseFilter: setPhaseFilter,
     renderSubjectCards: renderSubjectCards
   };
-})(window, document);
+})(typeof window !== 'undefined' ? window : this, typeof document !== 'undefined' ? document : {});

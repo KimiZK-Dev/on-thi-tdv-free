@@ -1,4 +1,4 @@
-// Dữ liệu môn: Lập dự án đầu tư (55 câu chuẩn bám sát đề cương 100%)
+// Dữ liệu môn: Lập dự án đầu tư (115 câu chuẩn bám sát đề cương 100%)
 (function (window) {
   'use strict';
   window.TDV_DATA = window.TDV_DATA || {};
@@ -772,6 +772,846 @@
     ],
     "answer": 2,
     "explanation": "Đáp án đúng: C. Sản phẩm của giai đoạn thực hiện đầu tư là Các kết quả đầu tư (công trình hoàn thành, dây chuyền thiết bị sẵn sàng vận hành)."
+  },
+  {
+    "id": "lpda_gk_01",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Đầu tư được hiểu là:",
+    "options": [
+      "A. Hoạt động chi tiêu nhằm tiêu dùng hiện tại",
+      "B. Hoạt động chi tiêu nhằm thu lợi trong tương lai",
+      "C. Hoạt động sản xuất hàng hóa",
+      "D. Hoạt động vay vốn"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_02",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Đầu tư phát triển có đặc điểm:",
+    "options": [
+      "A. Không tạo ra tài sản mới",
+      "B. Không ảnh hưởng đến năng lực sản xuất",
+      "C. Tạo ra tài sản mới, năng lực sản xuất và việc làm",
+      "D. Chỉ nhằm mục tiêu tiêu dùng"
+    ],
+    "answer": 2,
+    "explanation": "Đáp án đúng: C."
+  },
+  {
+    "id": "lpda_gk_03",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Nguồn vốn đầu tư (trên góc độ vĩ mô) gồm:",
+    "options": [
+      "A. Ngân sách Nhà nước và vốn vay cá nhân",
+      "B. Vốn trong nước và vốn nước ngoài",
+      "C. Vốn ngân hàng và vốn tự có",
+      "D. Vốn công và vốn tư"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_04",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Dự án đầu tư (xét về mặt hình thức) là:",
+    "options": [
+      "A. Tài liệu mô tả ý tưởng kinh doanh",
+      "B. Văn bản trình bày chi tiết hoạt động đầu tư, chi phí, hiệu quả và lộ trình thực hiện",
+      "C. Báo cáo tài chính của doanh nghiệp",
+      "D. Kế hoạch sản xuất hàng năm"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_05",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Hoạt động đầu tư (theo chức năng quản trị vốn) có thể chia thành:",
+    "options": [
+      "A. Đầu tư trực tiếp và gián tiếp",
+      "B. Đầu tư sản xuất và đầu tư thương mại",
+      "C. Đầu tư công và đầu tư tư nhân",
+      "D. Đầu tư ngắn hạn và dài hạn"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_06",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Chu kỳ của một dự án đầu tư gồm:",
+    "options": [
+      "A. Giai đoạn chuẩn bị – thực hiện – vận hành",
+      "B. Giai đoạn nghiên cứu – tiêu thụ – tái đầu tư",
+      "C. Giai đoạn khởi động – sản xuất – kết thúc",
+      "D. Giai đoạn xin vốn – thi công – thu hồi vốn"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_07",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Sự cần thiết phải đầu tư theo dự án vì:",
+    "options": [
+      "A. Giúp Nhà nước kiểm soát vốn đầu tư",
+      "B. Giúp nhà đầu tư xác định mục tiêu, chi phí và hiệu quả",
+      "C. Giúp doanh nghiệp dễ vay vốn",
+      "D. Giúp công trình nhanh hoàn thành"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_08",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Phân loại dự án đầu tư dựa vào quy mô vốn (và tầm quan trọng) là:",
+    "options": [
+      "A. Nhỏ, vừa, lớn",
+      "B. Ngắn hạn, trung hạn, dài hạn",
+      "C. Trong nước và nước ngoài",
+      "D. Đầu tư mới và đầu tư mở rộng"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A. Phân loại dự án đầu tư theo quy mô vốn và tầm quan trọng gồm có: dự án quy mô nhỏ, vừa và lớn (hoặc Nhóm A, B, C)."
+  },
+  {
+    "id": "lpda_gk_09",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Đầu tư phát triển khác đầu tư tài chính ở điểm:",
+    "options": [
+      "A. Cả hai đều không sinh lợi",
+      "B. Đầu tư phát triển tạo tài sản mới, đầu tư tài chính không",
+      "C. Đầu tư tài chính dài hạn hơn",
+      "D. Đầu tư phát triển mang tính rủi ro hơn"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_10",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Yếu tố nào KHÔNG thuộc đặc điểm của đầu tư phát triển?",
+    "options": [
+      "A. Chu kỳ vốn dài",
+      "B. Quy mô vốn lớn",
+      "C. Hiệu quả thể hiện nhanh",
+      "D. Tạo ra cơ sở vật chất mới"
+    ],
+    "answer": 2,
+    "explanation": "Đáp án đúng: C."
+  },
+  {
+    "id": "lpda_gk_31",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Bản chất của đầu tư (phát triển) là:",
+    "options": [
+      "A. Quá trình bỏ vốn để tiêu dùng",
+      "B. Quá trình bỏ vốn để tạo ra tài sản mới nhằm sinh lời trong tương lai",
+      "C. Quá trình tiết kiệm chi tiêu",
+      "D. Hoạt động chi tiêu mang tính ngắn hạn"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_32",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Đặc điểm của hoạt động đầu tư phát triển là:",
+    "options": [
+      "A. Chu kỳ vốn ngắn, lợi nhuận quay vòng nhanh",
+      "B. Chu kỳ vốn dài, rủi ro cao, lợi ích lâu dài",
+      "C. Không cần vốn ban đầu",
+      "D. Ít chịu ảnh hưởng của môi trường kinh tế"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_33",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Đầu tư chuyển dịch là:",
+    "options": [
+      "A. Đầu tư tạo ra tài sản mới",
+      "B. Đầu tư thay đổi cơ cấu kinh tế hoặc địa bàn đầu tư (hoặc chuyển dịch quyền sở hữu tài sản mà không tạo ra tài sản mới)",
+      "C. Đầu tư vào lĩnh vực tài chính",
+      "D. Đầu tư vào tiêu dùng"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_34",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Một trong những mục tiêu chính của đầu tư (phát triển) là:",
+    "options": [
+      "A. Tiêu dùng hiệu quả nguồn vốn",
+      "B. Mở rộng quy mô sản xuất, tăng năng lực sản xuất xã hội",
+      "C. Tiết kiệm chi tiêu công",
+      "D. Giảm chi phí quản lý"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_35",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Nguồn vốn đầu tư nước ngoài gồm:",
+    "options": [
+      "A. Vốn ngân sách và vốn doanh nghiệp",
+      "B. Vốn ODA, FDI, vốn vay thương mại quốc tế",
+      "C. Vốn tín dụng trong nước",
+      "D. Vốn tư nhân"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_36",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Trong chu kỳ của dự án đầu tư, giai đoạn “chuẩn bị đầu tư” nhằm:",
+    "options": [
+      "A. Thi công công trình",
+      "B. Xác định cơ hội, chuẩn bị và quyết định đầu tư",
+      "C. Tổ chức vận hành sản xuất",
+      "D. Thanh lý tài sản"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_37",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Trong giai đoạn “thực hiện đầu tư”, công việc chính là:",
+    "options": [
+      "A. Lập báo cáo khả thi",
+      "B. Xây dựng, mua sắm thiết bị, lắp đặt, chạy thử",
+      "C. Đánh giá hiệu quả xã hội",
+      "D. Thu hồi vốn"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_38",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Đầu tư gián tiếp là:",
+    "options": [
+      "A. Góp vốn trực tiếp vào sản xuất",
+      "B. Mua cổ phần, trái phiếu, chứng khoán",
+      "C. Đầu tư xây dựng cơ sở vật chất",
+      "D. Đầu tư máy móc thiết bị"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_39",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Dự án đầu tư được phân loại theo thời gian thực hiện gồm:",
+    "options": [
+      "A. Dự án ngắn hạn, trung hạn, dài hạn",
+      "B. Dự án nhỏ, vừa, lớn",
+      "C. Dự án trong nước, nước ngoài",
+      "D. Dự án cá nhân, tập thể"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_40",
+    "tab": "chuong1_2",
+    "chapter": "Chương 1: Đầu tư và Dự án Đầu tư",
+    "question": "Căn cứ quan trọng để phân loại dự án đầu tư theo cấp quản lý (Quan trọng QG, Nhóm A, B, C) là:",
+    "options": [
+      "A. Quy mô vốn và lĩnh vực hoạt động (tầm quan trọng)",
+      "B. Địa điểm thực hiện",
+      "C. Thời gian thực hiện",
+      "D. Số lượng nhân sự"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_11",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Trình tự nghiên cứu lập dự án đầu tư gồm:",
+    "options": [
+      "A. Chuẩn bị đầu tư – thực hiện đầu tư – kết thúc đầu tư",
+      "B. Ý tưởng – thiết kế – sản xuất",
+      "C. Nghiên cứu cơ hội – nghiên cứu tiền khả thi – nghiên cứu khả thi",
+      "D. Góp vốn – thi công – vận hành"
+    ],
+    "answer": 2,
+    "explanation": "Đáp án đúng: C."
+  },
+  {
+    "id": "lpda_gk_12",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Mục tiêu của nghiên cứu cơ hội đầu tư là:",
+    "options": [
+      "A. Xác định chi phí dự án",
+      "B. Xác định khả năng sinh lời (triển vọng) sơ bộ",
+      "C. Chuẩn bị thủ tục pháp lý",
+      "D. Phân tích hiệu quả xã hội"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_13",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Nghiên cứu tiền khả thi nhằm:",
+    "options": [
+      "A. Đưa ra quyết định đầu tư chính thức",
+      "B. Đánh giá sơ bộ tính khả thi của ý tưởng (cơ hội đầu tư)",
+      "C. Triển khai thi công dự án",
+      "D. Kiểm toán tài chính dự án"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_14",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Nghiên cứu khả thi được thực hiện để:",
+    "options": [
+      "A. Lập báo cáo chi tiết, phục vụ quyết định đầu tư",
+      "B. Lựa chọn địa điểm dự án",
+      "C. Xác định vốn vay ngân hàng",
+      "D. Nghiên cứu môi trường"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_15",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Cấp độ lập dự án (có qua bước tiền khả thi hay không) phụ thuộc vào:",
+    "options": [
+      "A. Quy mô vốn và tính chất (độ phức tạp kỹ thuật) của dự án",
+      "B. Ý tưởng của chủ đầu tư",
+      "C. Chính sách thuế",
+      "D. Quyết định của ngân hàng"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_16",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Nội dung chính của một dự án đầu tư KHÔNG bao gồm:",
+    "options": [
+      "A. Phân tích thị trường",
+      "B. Phân tích tài chính",
+      "C. Báo cáo kiểm toán",
+      "D. Phân tích kỹ thuật"
+    ],
+    "answer": 2,
+    "explanation": "Đáp án đúng: C."
+  },
+  {
+    "id": "lpda_gk_17",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Trong quá trình lập dự án đầu tư, nội dung nào thực hiện sau cùng?",
+    "options": [
+      "A. Phân tích tài chính",
+      "B. Phân tích thị trường",
+      "C. Đánh giá hiệu quả kinh tế - xã hội",
+      "D. Nghiên cứu kỹ thuật"
+    ],
+    "answer": 2,
+    "explanation": "Đáp án đúng: C."
+  },
+  {
+    "id": "lpda_gk_18",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Mức độ nghiên cứu của từng cấp lập dự án đầu tư (Cơ hội, Tiền khả thi, Khả thi) khác nhau chủ yếu ở:",
+    "options": [
+      "A. Số trang của báo cáo",
+      "B. Độ chi tiết và mức độ phân tích (độ chính xác, tin cậy của số liệu)",
+      "C. Hình thức trình bày",
+      "D. Cơ quan thẩm định"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_19",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Cấu trúc cơ bản của một văn bản dự án đầu tư gồm:",
+    "options": [
+      "A. Giới thiệu (Mở đầu), nội dung, kết luận (và phụ lục)",
+      "B. Mở đầu, nội dung, tài chính, phụ lục",
+      "C. Mục tiêu, phân tích, kết luận",
+      "D. Giới thiệu, phân tích, đánh giá hiệu quả"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A. Cấu trúc cơ bản của văn bản dự án gồm 3 phần chính: Mở đầu/Giới thiệu, Nội dung nghiên cứu chính và Kết luận."
+  },
+  {
+    "id": "lpda_gk_20",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Công tác tổ chức lập dự án đầu tư giúp:",
+    "options": [
+      "A. Giảm chi phí xây dựng",
+      "B. Xác định chính xác quy mô, tiến độ và hiệu quả dự án",
+      "C. Tăng tốc độ cấp phép đầu tư",
+      "D. Tăng tính hấp dẫn cho dự án"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_41",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Mục tiêu của công tác lập dự án đầu tư là:",
+    "options": [
+      "A. Đảm bảo dự án có tính khả thi, hiệu quả và đúng pháp luật",
+      "B. Giảm chi phí tài chính",
+      "C. Đẩy nhanh tiến độ thi công",
+      "D. Thay đổi cơ cấu vốn"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_42",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Nghiên cứu cơ hội đầu tư thường được thực hiện bởi:",
+    "options": [
+      "A. Cơ quan Nhà nước",
+      "B. Nhà đầu tư hoặc tư vấn đầu tư",
+      "C. Ngân hàng",
+      "D. Doanh nghiệp cung ứng vật tư"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_43",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Trong nghiên cứu tiền khả thi (và khả thi), yếu tố chuyên môn nào được xem xét trước tiên để làm căn cứ cho các phần sau?",
+    "options": [
+      "A. Vốn đầu tư",
+      "B. Thị trường và quy mô sản phẩm",
+      "C. Hiệu quả kinh tế - xã hội",
+      "D. Thiết kế kỹ thuật"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_44",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Báo cáo nghiên cứu khả thi thường là căn cứ để:",
+    "options": [
+      "A. Ra quyết định đầu tư (và xin cấp phép, tài trợ vốn)",
+      "B. Thi công dự án",
+      "C. Ký hợp đồng thương mại",
+      "D. Thẩm định tài chính doanh nghiệp"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_45",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Khi lập dự án đầu tư, phân tích kỹ thuật nhằm:",
+    "options": [
+      "A. Xác định hiệu quả tài chính",
+      "B. Lựa chọn công nghệ, thiết bị, quy mô (công suất), địa điểm hợp lý",
+      "C. Xác định rủi ro thị trường",
+      "D. Đánh giá nguồn vốn"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_46",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Một dự án đầu tư khả thi phải đáp ứng điều kiện nào sau đây?",
+    "options": [
+      "A. Hiệu quả tài chính và xã hội đều chấp nhận được (cùng tính khả thi về thị trường, kỹ thuật, pháp lý)",
+      "B. Lợi nhuận cao nhất có thể",
+      "C. Chi phí đầu tư thấp nhất",
+      "D. Thời gian thực hiện nhanh nhất"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_47",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Trong lập dự án đầu tư, nội dung “phân tích rủi ro” giúp:",
+    "options": [
+      "A. Dự đoán và giảm thiểu tác động tiêu cực (của các yếu tố bất định đến dự án)",
+      "B. Tăng doanh thu dự án",
+      "C. Rút ngắn thời gian thi công",
+      "D. Hạn chế chi phí marketing"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_48",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Sản phẩm của giai đoạn nghiên cứu tiền khả thi là:",
+    "options": [
+      "A. Báo cáo tiền khả thi (Báo cáo nghiên cứu tiền khả thi)",
+      "B. Báo cáo nghiên cứu khả thi",
+      "C. Báo cáo tổng hợp đầu tư",
+      "D. Hồ sơ đấu thầu"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_49",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Cơ quan nào có thẩm quyền thẩm định dự án đầu tư (cấp phép/quyết định chủ trương)?",
+    "options": [
+      "A. Cơ quan Nhà nước có thẩm quyền hoặc cơ quan chủ quản (và tổ chức tài trợ vốn)",
+      "B. Ngân hàng",
+      "C. Doanh nghiệp tư nhân",
+      "D. Nhà đầu tư nước ngoài"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_50",
+    "tab": "chuong1_2",
+    "chapter": "Chương 2: Trình tự, Nội dung và Tổ chức lập Dự án Đầu tư",
+    "question": "Trong dự án đầu tư, “vị trí (địa điểm) dự án” ảnh hưởng trực tiếp đến:",
+    "options": [
+      "A. Hiệu quả kỹ thuật và chi phí vận hành (chi phí xây dựng, vận chuyển nguyên vật liệu, tiêu thụ sản phẩm)",
+      "B. Thời gian lập dự án",
+      "C. Quy mô vốn",
+      "D. Hình thức đầu tư"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_21",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Môi trường vĩ mô trong nghiên cứu dự án bao gồm:",
+    "options": [
+      "A. Đối thủ cạnh tranh và khách hàng",
+      "B. Chính trị, pháp luật, kinh tế, xã hội, tự nhiên",
+      "C. Đối tác và nhà cung cấp",
+      "D. Giá cả và thu nhập người tiêu dùng"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_22",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Môi trường vi mô (môi trường tác nghiệp/ngành) bao gồm:",
+    "options": [
+      "A. Các yếu tố chính trị, pháp lý",
+      "B. Đối thủ cạnh tranh, khách hàng, nhà cung cấp",
+      "C. Các hiệp định thương mại",
+      "D. Xu hướng kinh tế vĩ mô"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_23",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Khi nghiên cứu môi trường, cần chú ý yếu tố nào để xác định cơ hội đầu tư (khoảng trống thị trường)?",
+    "options": [
+      "A. Mức lãi suất ngân hàng",
+      "B. Biến động cung cầu và xu hướng thị trường",
+      "C. Tỷ giá hối đoái",
+      "D. Tốc độ đô thị hóa"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_24",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Mục đích nghiên cứu môi trường trong dự án đầu tư là:",
+    "options": [
+      "A. Xây dựng kế hoạch tài chính chi tiết",
+      "B. Đánh giá ảnh hưởng của môi trường đến tính khả thi của dự án (nhận diện cơ hội thuận lợi hay khó khăn, cản trở)",
+      "C. Dự báo lợi nhuận năm đầu",
+      "D. Tìm nguồn vốn tài trợ"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_25",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Nghiên cứu thị trường trong dự án đầu tư nhằm:",
+    "options": [
+      "A. Xác định quy mô và cơ cấu nhu cầu sản phẩm (cũng như thị phần và cách thức chiếm lĩnh)",
+      "B. Lập kế hoạch sản xuất",
+      "C. Phân tích tài chính",
+      "D. Xác định nhà cung cấp thiết bị"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_26",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Khi phân tích thị trường, yếu tố quan trọng nhất (điểm xuất phát) là:",
+    "options": [
+      "A. Thị phần đối thủ",
+      "B. Nguồn cung cấp nguyên liệu",
+      "C. Nhu cầu hiện tại và tiềm năng của thị trường (nhu cầu người tiêu dùng)",
+      "D. Chính sách thuế"
+    ],
+    "answer": 2,
+    "explanation": "Đáp án đúng: C."
+  },
+  {
+    "id": "lpda_gk_27",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Thông tin thị trường có thể thu thập từ:",
+    "options": [
+      "A. Báo chí, cơ quan thống kê, khảo sát thực tế",
+      "B. Nội bộ doanh nghiệp",
+      "C. Ngân hàng",
+      "D. Dữ liệu tài chính công ty"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_28",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Khi phân tích cạnh tranh trong dự án đầu tư, cần xác định:",
+    "options": [
+      "A. Tốc độ tăng trưởng GDP",
+      "B. Đối thủ hiện tại và tiềm năng (điểm mạnh, điểm yếu và chiến lược cạnh tranh)",
+      "C. Tình hình ngân sách nhà nước",
+      "D. Chi phí nhân công"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_29",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Phân tích SWOT trong dự án đầu tư nhằm:",
+    "options": [
+      "A. Xác định các điểm mạnh (Strengths), yếu (Weaknesses), cơ hội (Opportunities), thách thức (Threats)",
+      "B. Xây dựng chiến lược marketing",
+      "C. Dự báo doanh thu",
+      "D. Đánh giá môi trường tự nhiên"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_30",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Căn cứ chủ yếu để hình thành dự án đầu tư là:",
+    "options": [
+      "A. Nhu cầu thị trường, chính sách (quy hoạch) phát triển, khả năng tài chính (nguồn lực)",
+      "B. Mức thuế suất",
+      "C. Giá vàng thế giới",
+      "D. Chi phí vận hành doanh nghiệp"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_51",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Khi nghiên cứu môi trường vĩ mô, yếu tố pháp luật chủ yếu liên quan đến:",
+    "options": [
+      "A. Quy định đầu tư, thuế, đất đai",
+      "B. Xu hướng tiêu dùng",
+      "C. Cạnh tranh ngành",
+      "D. Chi phí nhân công"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_52",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Môi trường kinh tế ảnh hưởng đến dự án thông qua:",
+    "options": [
+      "A. Lãi suất, tỷ giá, lạm phát, tốc độ tăng trưởng GDP (và chu kỳ kinh tế, ngoại thương)",
+      "B. Thị hiếu người tiêu dùng",
+      "C. Sở thích của nhà đầu tư",
+      "D. Các yếu tố tự nhiên"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_53",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Khi nghiên cứu môi trường tự nhiên, cần quan tâm đến:",
+    "options": [
+      "A. Chính trị và pháp lý",
+      "B. Khí hậu, địa hình, tài nguyên, điều kiện sinh thái (nguồn nước/thủy văn, vị trí địa lý)",
+      "C. Dân số và thu nhập",
+      "D. Lãi suất ngân hàng"
+    ],
+    "answer": 1,
+    "explanation": "Đáp án đúng: B."
+  },
+  {
+    "id": "lpda_gk_54",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Yếu tố văn hóa - xã hội trong môi trường vĩ mô ảnh hưởng qua:",
+    "options": [
+      "A. Trình độ dân trí, thói quen tiêu dùng, cơ cấu dân số (và mức sống)",
+      "B. Chính sách xuất nhập khẩu",
+      "C. Giá vàng và chứng khoán",
+      "D. Quy định thuế"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_55",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Khi phân tích môi trường vi mô, yếu tố “khách hàng” giúp:",
+    "options": [
+      "A. Dự đoán xu hướng tiêu dùng và sức mua",
+      "B. Tính chi phí nhân công",
+      "C. Xác định chính sách tài chính",
+      "D. Lựa chọn công nghệ sản xuất"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_56",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Nghiên cứu đối thủ cạnh tranh giúp nhà đầu tư:",
+    "options": [
+      "A. Xác định chiến lược định vị sản phẩm và giá cả hợp lý (xây dựng chiến lược cạnh tranh)",
+      "B. Tăng chi phí quảng cáo",
+      "C. Giảm vốn đầu tư",
+      "D. Giảm chi phí sản xuất"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_57",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Trong nghiên cứu thị trường, “phân đoạn thị trường” nhằm:",
+    "options": [
+      "A. Xác định nhóm khách hàng có đặc điểm (nhu cầu, hành vi) tương đồng",
+      "B. Tăng giá bán",
+      "C. Rút ngắn thời gian sản xuất",
+      "D. Tăng chi phí marketing"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_58",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Khi lập dự án đầu tư, phân tích (dự báo) cung - cầu thị trường giúp:",
+    "options": [
+      "A. Xác định quy mô đầu tư (công suất) và sản lượng hợp lý",
+      "B. Lựa chọn công nghệ",
+      "C. Xác định thời gian thi công",
+      "D. Xác định nhân sự"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_59",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Thông tin thứ cấp trong nghiên cứu thị trường là:",
+    "options": [
+      "A. Dữ liệu sẵn có từ cơ quan thống kê, báo cáo ngành (báo chí, tài liệu đã công bố)",
+      "B. Thông tin thu thập trực tiếp từ khảo sát khách hàng (đây là thông tin sơ cấp)",
+      "C. Dữ liệu thu thập tại điểm bán hàng (đây là thông tin sơ cấp)",
+      "D. Số liệu tài chính nội bộ"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
+  },
+  {
+    "id": "lpda_gk_60",
+    "tab": "chuong3",
+    "chapter": "Chương 3: Căn cứ & Nghiên cứu Thị trường Dự án Đầu tư",
+    "question": "Khi tổng hợp kết quả nghiên cứu thị trường, nhà đầu tư cần:",
+    "options": [
+      "A. Đưa ra quyết định về quy mô và chiến lược đầu tư phù hợp (có nên đầu tư hay không và đầu tư với quy mô nào)",
+      "B. Dừng nghiên cứu",
+      "C. Giảm vốn đầu tư",
+      "D. Thay đổi lĩnh vực đầu tư"
+    ],
+    "answer": 0,
+    "explanation": "Đáp án đúng: A."
   }
 ];
-})(window);
+})(typeof window !== 'undefined' ? window : this);

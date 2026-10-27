@@ -49,16 +49,16 @@
     }
   ];
 
-  // 4 TAB CHO MÔN LẬP DỰ ÁN ĐẦU TƯ (55 CÂU)
+  // 4 TAB CHO MÔN LẬP DỰ ÁN ĐẦU TƯ (115 CÂU)
   var LPDA_TABS = [
     {
       id: 'chuong1_2',
-      label: 'Chương 1 & 2: Tổng quan & Trình tự (15 câu)',
+      label: 'Chương 1 & 2: Tổng quan & Trình tự (55 câu)',
       aliases: ['chuong1_2', 'de1', 'chuong1', 'chuong2', 'ch1', 'ch2']
     },
     {
       id: 'chuong3',
-      label: 'Chương 3: Căn cứ & Thị trường (20 câu)',
+      label: 'Chương 3: Căn cứ & Thị trường (40 câu)',
       aliases: ['chuong3', 'de2', 'ch3', 'thitruong']
     },
     {
@@ -68,9 +68,17 @@
     },
     {
       id: 'ontap',
-      label: 'Ôn tập toàn bộ học phần (55 câu)',
+      label: 'Ôn tập toàn bộ học phần (115 câu)',
       aliases: ['ontap', 'on_tap', 'all', 'cuoiky', 'tonghop']
     }
+  ];
+
+  // 4 TAB CHO HỆ THỐNG THUẾ VIỆT NAM (246 CÂU)
+  var THUE_TABS = [
+    { id: 'chuong1', label: 'Chương 1: Tổng quan về Thuế (25 câu)', aliases: ['chuong1', 'ch1', 'tongquan'] },
+    { id: 'chuong2', label: 'Chương 2: Thuế XNK (113 câu)', aliases: ['chuong2', 'ch2', 'xnk'] },
+    { id: 'chuong3', label: 'Chương 3: Thuế TTĐB (108 câu)', aliases: ['chuong3', 'ch3', 'ttdb'] },
+    { id: 'ontap', label: 'Tổng hợp toàn bộ 3 chương (246 câu)', aliases: ['ontap', 'on_tap', 'all', 'tonghop', 'cuoiky'] }
   ];
 
   // 3 TAB CHO CHỦ NGHĨA XÃ HỘI KHOA HỌC (382 CÂU)
@@ -84,11 +92,11 @@
   var KTVM_TABS = [
     { id: 'de1', label: 'Đề thi Giữa kỳ lần 1 (30)', aliases: ['de1', 'de_1', 'midterm'] },
     { id: 'de2', label: 'Đề thi Giữa kỳ lần 2 (30)', aliases: ['de2', 'de_2'] },
-    { id: 'giuaky', label: 'Ôn tập trọng tâm (30)', aliases: ['giuaky', 'ontap'] },
-    { id: 'ontap', label: 'Tổng hợp toàn bộ kiến thức (117 câu)', aliases: ['all', 'tonghop', 'cuoiky'] }
+    { id: 'giuaky', label: 'Ôn tập trọng tâm (30 câu)', aliases: ['giuaky', 'giua_ky', 'trongtam'] },
+    { id: 'ontap', label: 'Tổng hợp toàn bộ kiến thức (117 câu)', aliases: ['ontap', 'on_tap', 'all', 'tonghop', 'cuoiky'] }
   ];
 
-  // DANH MỤC 6 MÔN HỌC - BẢNG MÀU THANH LỊCH, TINH TẾ
+  // DANH MỤC 7 MÔN HỌC - BẢNG MÀU THANH LỊCH, TINH TẾ
   var SUBJECTS_CONFIG = [
     {
       id: 'ta1',
@@ -164,9 +172,22 @@
       examTypes: ['cuoiky'],
       icon: 'briefcase',
       color: '#059669',
-      description: 'Trọn bộ 55 câu trắc nghiệm bám sát đề cương 100%, nghiên cứu thị trường, kỹ thuật và tài chính dự án.',
-      tags: ['Chương 1 & 2: Tổng quan (15)', 'Chương 3: Căn cứ & Thị trường (20)', 'Trắc nghiệm Thực hành (20)'],
+      description: 'Trọn bộ 115 câu trắc nghiệm bám sát đề cương 100%, nghiên cứu thị trường, kỹ thuật và tài chính dự án.',
+      tags: ['Chương 1 & 2: Tổng quan (55)', 'Chương 3: Căn cứ & Thị trường (40)', 'Trắc nghiệm Thực hành (20)', 'Tổng hợp (115)'],
       tabs: LPDA_TABS
+    },
+    {
+      id: 'thue',
+      code: 'THUE',
+      name: 'Hệ Thống Thuế Việt Nam',
+      phase: 'Giữa kỳ & Cuối kỳ',
+      phaseType: 'midterm',
+      examTypes: ['giuaky', 'cuoiky'],
+      icon: 'file-text',
+      color: '#ea580c',
+      description: 'Trọn bộ 246 câu trắc nghiệm tổng quan về thuế, thuế xuất khẩu, nhập khẩu và thuế tiêu thụ đặc biệt.',
+      tags: ['Chương 1: Tổng quan (25)', 'Chương 2: Thuế XNK (113)', 'Chương 3: Thuế TTĐB (108)', 'Tổng hợp (246)'],
+      tabs: THUE_TABS
     }
   ];
 
@@ -185,6 +206,7 @@
     DEFAULT_TABS: DEFAULT_TABS,
     TA1_TABS: TA1_TABS,
     LPDA_TABS: LPDA_TABS,
+    THUE_TABS: THUE_TABS,
     CNXH_TABS: CNXH_TABS,
     KTVM_TABS: KTVM_TABS,
     getAllSubjects: function () {
@@ -192,4 +214,4 @@
     },
     getSubjectById: getSubjectById
   };
-})(window);
+})(typeof window !== 'undefined' ? window : this);

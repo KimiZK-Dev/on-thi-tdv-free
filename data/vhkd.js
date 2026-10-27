@@ -1850,4 +1850,4 @@
     "answer": 0
   }
 ];
-})(window);
+})(typeof window !== 'undefined' ? window : this);

@@ -77,12 +77,16 @@
 
     var statQuestionsEl = document.getElementById('hero-stat-questions');
     var statSubjectsEl = document.getElementById('hero-stat-subjects');
+    var footerStatsEl = document.getElementById('footer-stats-note');
 
     if (statQuestionsEl && totalQuestions > 0) {
       statQuestionsEl.textContent = totalQuestions.toLocaleString('vi-VN') + '+';
     }
     if (statSubjectsEl && subjects.length > 0) {
       statSubjectsEl.textContent = subjects.length + ' môn';
+    }
+    if (footerStatsEl && totalQuestions > 0 && subjects.length > 0) {
+      footerStatsEl.innerHTML = 'Kho dữ liệu ' + subjects.length + ' môn học &bull; ' + totalQuestions.toLocaleString('vi-VN') + ' câu hỏi &bull; Phát triển vì cộng đồng sinh viên';
     }
   }
 
@@ -109,7 +113,7 @@
     updateHeroStats();
 
     // Hỗ trợ mở môn thông qua URL Hash nếu có (VD: #ta1)
-    if (window.location.hash) {
+    if (typeof window !== 'undefined' && window.location && window.location.hash) {
       var hashSub = window.location.hash.replace('#', '').trim().toLowerCase();
       if (hashSub && window.TDV_CONFIG && window.TDV_CONFIG.getSubjectById(hashSub)) {
         setTimeout(function () {
@@ -127,6 +131,7 @@
 
   window.TDV_APP = {
     bootstrap: bootstrap,
-    applyTheme: applyTheme
+    applyTheme: applyTheme,
+    updateHeroStats: updateHeroStats
   };
-})(window, document);
+})(typeof window !== 'undefined' ? window : this, typeof document !== 'undefined' ? document : {});

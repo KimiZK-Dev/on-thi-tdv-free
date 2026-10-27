@@ -1,5 +1,7 @@
-window.TDV_DATA = window.TDV_DATA || {};
-window.TDV_DATA.ta1 = [
+(function (window) {
+  'use strict';
+  window.TDV_DATA = window.TDV_DATA || {};
+  window.TDV_DATA.ta1 = [
   {
     "id": "ta1_sign_1",
     "category": "signs",
@@ -4262,3 +4264,4 @@ window.TDV_DATA.ta1 = [
     "explanation": "Đáp án chính xác là A theo chuyên đề Ngữ pháp - Từ vựng TA1."
   }
 ];
+})(typeof window !== 'undefined' ? window : this);

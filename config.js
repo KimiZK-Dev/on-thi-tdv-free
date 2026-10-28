@@ -96,7 +96,7 @@
     { id: 'ontap', label: 'Tổng hợp toàn bộ kiến thức (117 câu)', aliases: ['ontap', 'on_tap', 'all', 'tonghop', 'cuoiky'] }
   ];
 
-  // DANH MỤC 7 MÔN HỌC - BẢNG MÀU THANH LỊCH, TINH TẾ
+  // DANH MỤC 9 MÔN HỌC - BẢNG MÀU THANH LỊCH, TINH TẾ
   var SUBJECTS_CONFIG = [
     {
       id: 'ta1',
@@ -188,6 +188,32 @@
       description: 'Trọn bộ 246 câu trắc nghiệm tổng quan về thuế, thuế xuất khẩu, nhập khẩu và thuế tiêu thụ đặc biệt.',
       tags: ['Chương 1: Tổng quan (25)', 'Chương 2: Thuế XNK (113)', 'Chương 3: Thuế TTĐB (108)', 'Tổng hợp (246)'],
       tabs: THUE_TABS
+    },
+    {
+      id: 'hsk1',
+      code: 'HSK1',
+      name: 'Tiếng Trung HSK 1 (CTI)',
+      phase: 'Chứng chỉ CTI',
+      phaseType: 'midterm',
+      examTypes: ['giuaky', 'cuoiky'],
+      icon: 'globe',
+      color: '#dc2626',
+      description: 'Trọn bộ 10 đề thi chuẩn Hanban CTI quốc tế (400 câu hỏi), giọng phát âm Bắc Kinh chuẩn, chấm điểm tự động thang 200 điểm.',
+      tags: ['10 Đề thi CBT (400 câu)', '20 câu Nghe hiểu', '20 câu Đọc hiểu', '150 Từ vựng Hanban'],
+      tabs: []
+    },
+    {
+      id: 'hsk2',
+      code: 'HSK2',
+      name: 'Tiếng Trung HSK 2 (CTI)',
+      phase: 'Chứng chỉ CTI',
+      phaseType: 'final',
+      examTypes: ['cuoiky'],
+      icon: 'award',
+      color: '#b91c1c',
+      description: 'Trọn bộ 10 đề thi thực chiến HSK 2 (600 câu hỏi), ma trận 60 câu/đề (35 Nghe + 25 Đọc), bám sát 770+ từ vựng và cấu trúc ngữ pháp.',
+      tags: ['10 Đề thi CBT (600 câu)', '35 câu Nghe hiểu', '25 câu Đọc hiểu', '770+ Từ vựng CTI'],
+      tabs: []
     }
   ];
 

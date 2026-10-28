@@ -70,7 +70,11 @@
     var subjects = window.TDV_CONFIG && window.TDV_CONFIG.getAllSubjects ? window.TDV_CONFIG.getAllSubjects() : [];
 
     subjects.forEach(function (sub) {
-      if (window.TDV_QUIZ && typeof window.TDV_QUIZ.getTotalQuestionCountForSubject === 'function') {
+      if (sub.id === 'hsk1') {
+        totalQuestions += 400;
+      } else if (sub.id === 'hsk2') {
+        totalQuestions += 600;
+      } else if (window.TDV_QUIZ && typeof window.TDV_QUIZ.getTotalQuestionCountForSubject === 'function') {
         totalQuestions += window.TDV_QUIZ.getTotalQuestionCountForSubject(sub.id);
       }
     });
@@ -112,12 +116,18 @@
 
     updateHeroStats();
 
-    // Hỗ trợ mở môn thông qua URL Hash nếu có (VD: #ta1)
+    // Hỗ trợ mở môn thông qua URL Hash nếu có (VD: #ta1, #hsk1, #hsk2)
     if (typeof window !== 'undefined' && window.location && window.location.hash) {
       var hashSub = window.location.hash.replace('#', '').trim().toLowerCase();
       if (hashSub && window.TDV_CONFIG && window.TDV_CONFIG.getSubjectById(hashSub)) {
         setTimeout(function () {
-          window.TDV_QUIZ.openSubject(hashSub);
+          if (hashSub === 'hsk1' && window.HSK_APP) {
+            window.HSK_APP.openHsk1Hub();
+          } else if (hashSub === 'hsk2' && window.HSK_APP) {
+            window.HSK_APP.openHsk2Hub();
+          } else if (window.TDV_QUIZ && typeof window.TDV_QUIZ.openSubject === 'function') {
+            window.TDV_QUIZ.openSubject(hashSub);
+          }
         }, 100);
       }
     }

@@ -49,6 +49,13 @@
           </svg>
           <span class="label">Trang chủ</span>
         </button>
+        <button type="button" class="btn-header-link" id="btn-handbook-open" title="Tra cứu Sổ tay từ vựng & ngữ pháp HSK" aria-label="Sổ tay HSK">
+          <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span class="label">Sổ tay HSK</span>
+        </button>
         <button type="button" class="btn-header-control" id="btn-sound-toggle" title="Bật/Tắt âm thanh phản hồi" aria-label="Bật/Tắt âm thanh">
           <span class="btn-icon" id="sound-icon-slot">
             <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -103,11 +110,11 @@
           <!-- Quick Stats Row -->
           <div class="hero-stats-grid">
             <div class="stat-card">
-              <div class="stat-number" id="hero-stat-subjects">7 môn</div>
-              <div class="stat-label">Học phần trọng tâm</div>
+              <div class="stat-number" id="hero-stat-subjects">9 môn</div>
+              <div class="stat-label">Học phần & Chứng chỉ</div>
             </div>
             <div class="stat-card">
-              <div class="stat-number" id="hero-stat-questions">1.690+</div>
+              <div class="stat-number" id="hero-stat-questions">2.690+</div>
               <div class="stat-label">Câu hỏi có đáp án</div>
             </div>
             <div class="stat-card">
@@ -115,8 +122,8 @@
               <div class="stat-label">Miễn phí sử dụng</div>
             </div>
             <div class="stat-card">
-              <div class="stat-number">2 Chế độ</div>
-              <div class="stat-label">Luyện tập & Thi thử</div>
+              <div class="stat-number">CBT & Trắc nghiệm</div>
+              <div class="stat-label">Luyện thi chuẩn Hanban</div>
             </div>
           </div>
         </div>
@@ -134,7 +141,7 @@
               type="text" 
               id="subject-search-input" 
               class="subject-search-input" 
-              placeholder="Tìm kiếm môn học theo tên hoặc mã môn (TA1, THUE, CNXH, VIMO, KTVM...)"
+              placeholder="Tìm kiếm môn học theo tên hoặc mã môn (HSK1, HSK2, TA1, THUE, CNXH, VIMO, KTVM...)"
               autocomplete="off"
             />
           </div>
@@ -145,7 +152,7 @@
               <button type="button" class="phase-filter-btn" data-phase="midterm">Giữa kỳ</button>
               <button type="button" class="phase-filter-btn" data-phase="final">Cuối kỳ</button>
             </div>
-            <div class="found-counter-badge" id="subjects-found-count">7 môn học</div>
+            <div class="found-counter-badge" id="subjects-found-count">9 môn học</div>
           </div>
         </div>
       </div>
@@ -413,6 +420,66 @@
       </div>
     </section>
 
+    <!-- VIEW 4: HSK 1 HUB -->
+    <section class="view-section hidden" id="hsk1-hub-view">
+      <div class="hsk-hub-wrapper">
+        <div class="hsk-hub-header">
+          <button class="btn-back-hub" id="btn-hsk1-back" type="button">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Trang chủ</span>
+          </button>
+          <div class="hsk-hub-title-box">
+            <div class="hsk-hub-badge">HSK LEVEL 1 &bull; HANBAN CTI</div>
+            <h2 class="hsk-hub-title">Kho Đề Thi HSK 1 CBT Quốc Tế</h2>
+            <p class="hsk-hub-sub">10 Đề thi chuẩn quốc tế Hanban • 400 câu hỏi • Giọng đọc Bắc Kinh (zh-CN) • Miễn phí 100%</p>
+          </div>
+          <button class="btn-handbook-trigger" onclick="window.HSK_APP.openHandbookModal('hsk1')" type="button">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>Sổ tay HSK 1</span>
+          </button>
+        </div>
+        <div class="hsk-exam-grid" id="hsk1-exam-list">
+          <!-- Rendered by window.HSK_APP.renderHsk1ExamList() -->
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 5: HSK 2 HUB -->
+    <section class="view-section hidden" id="hsk2-hub-view">
+      <div class="hsk-hub-wrapper">
+        <div class="hsk-hub-header">
+          <button class="btn-back-hub" id="btn-hsk2-back" type="button">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Trang chủ</span>
+          </button>
+          <div class="hsk-hub-title-box">
+            <div class="hsk-hub-badge">HSK LEVEL 2 &bull; HANBAN CTI</div>
+            <h2 class="hsk-hub-title">Kho Đề Thi HSK 2 CBT Quốc Tế</h2>
+            <p class="hsk-hub-sub">10 Đề thi thực chiến CTI • 600 câu hỏi • Thang điểm 200 (Đạt >= 120 điểm) • Miễn phí 100%</p>
+          </div>
+          <button class="btn-handbook-trigger" onclick="window.HSK_APP.openHandbookModal('hsk2')" type="button">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>Sổ tay HSK 2</span>
+          </button>
+        </div>
+        <div class="hsk-exam-grid" id="hsk2-exam-list">
+          <!-- Rendered by window.HSK_APP.renderHsk2ExamList() -->
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Question Map Palette Drawer -->
@@ -525,6 +592,139 @@
     </div>
   </div>
 
+  <!-- CBT EXAM ROOM FULLSCREEN MODAL -->
+  <div class="cbt-exam-room-modal hidden" id="cbt-exam-room">
+    <div class="cbt-room-container">
+      <header class="cbt-room-header">
+        <div class="cbt-room-header-left">
+          <button class="btn-cbt-exit" id="btn-cbt-exit" type="button" title="Thoát phòng thi">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            <span>Thoát</span>
+          </button>
+          <span class="cbt-exam-name" id="cbt-exam-name">Phòng thi CBT</span>
+        </div>
+        <div class="cbt-room-header-right">
+          <div class="cbt-timer-box">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span class="cbt-timer-text" id="cbt-countdown">35:00</span>
+          </div>
+          <button class="btn-cbt-submit" id="btn-cbt-submit" type="button">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Nộp bài</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="cbt-room-layout">
+        <main class="cbt-main-panel">
+          <div class="cbt-part-banner" id="cbt-part-banner">一、听力 (Phần Nghe)</div>
+          
+          <div class="cbt-audio-bar hidden" id="cbt-audio-bar">
+            <button class="btn-audio-play" id="btn-play-cbt-audio" type="button">
+              <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+              </svg>
+              <span>Phát âm câu hỏi</span>
+            </button>
+            <div class="audio-playing-indicator" id="audio-playing-indicator">Sẵn sàng phát âm (Bấm nút để nghe)</div>
+          </div>
+
+          <div class="cbt-shared-context hidden" id="cbt-shared-context"></div>
+
+          <div class="cbt-question-card">
+            <div class="cbt-q-header">
+              <span class="cbt-q-index" id="q-index-display">Câu 1</span>
+              <span class="cbt-q-skill" id="q-skill-label">Kỹ năng: Nghe hiểu</span>
+            </div>
+
+            <div class="cbt-q-prompt" id="q-prompt-area"></div>
+
+            <div class="cbt-q-options" id="q-options-area"></div>
+
+            <div class="cbt-q-explanation hidden" id="q-explanation-box"></div>
+          </div>
+
+          <div class="cbt-nav-controls">
+            <button class="btn-cbt-nav btn-cbt-prev" id="btn-cbt-prev" type="button">
+              <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              <span>Câu trước</span>
+            </button>
+            <button class="btn-cbt-nav btn-cbt-next" id="btn-cbt-next" type="button">
+              <span>Câu sau</span>
+              <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </main>
+
+        <aside class="cbt-side-palette">
+          <div class="palette-group">
+            <div class="cbt-palette-title" id="palette-listen-title">一、听力 (Phần Nghe)</div>
+            <div class="cbt-palette-grid" id="palette-listening"></div>
+          </div>
+          <div class="palette-group">
+            <div class="cbt-palette-title" id="palette-read-title">二、阅读 (Phần Đọc)</div>
+            <div class="cbt-palette-grid" id="palette-reading"></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL SỔ TAY HSK TRA CỨU -->
+  <div class="handbook-modal-backdrop hidden" id="modal-hsk-handbook">
+    <div class="handbook-modal-card">
+      <div class="handbook-modal-header">
+        <div class="handbook-title-group">
+          <h3 class="handbook-modal-title">Sổ Tay Từ Vựng &amp; Ngữ Pháp HSK</h3>
+          <p class="handbook-modal-subtitle">Tra cứu 920+ từ vựng &amp; điểm ngữ pháp cốt lõi chuẩn Hanban</p>
+        </div>
+        <button type="button" class="btn-handbook-close" id="btn-handbook-close" aria-label="Đóng sổ tay">
+          <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="handbook-toolbar">
+        <div class="handbook-level-switch">
+          <button type="button" class="handbook-lvl-tab active" id="btn-handbook-lvl-hsk1" onclick="window.HSK_APP.switchHandbookLevel('hsk1')">HSK 1</button>
+          <button type="button" class="handbook-lvl-tab" id="btn-handbook-lvl-hsk2" onclick="window.HSK_APP.switchHandbookLevel('hsk2')">HSK 2</button>
+        </div>
+        <div class="handbook-tab-switch">
+          <button type="button" class="handbook-type-tab active" id="btn-handbook-tab-vocab" onclick="window.HSK_APP.switchHandbookTab('vocab')">Từ vựng (150 từ)</button>
+          <button type="button" class="handbook-type-tab" id="btn-handbook-tab-grammar" onclick="window.HSK_APP.switchHandbookTab('grammar')">Ngữ pháp Cốt lõi</button>
+        </div>
+        <div class="handbook-search-wrap">
+          <svg class="ui-icon search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="handbook-search-input" class="handbook-search-field" placeholder="Tra nhanh Hanzi, Pinyin, nghĩa tiếng Việt..." autocomplete="off" />
+        </div>
+      </div>
+
+      <div class="handbook-modal-body">
+        <div class="handbook-vocab-content" id="handbook-vocab-content"></div>
+        <div class="handbook-grammar-content hidden" id="handbook-grammar-content"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer trang web -->
   <footer class="app-footer">
     <div class="footer-container">
@@ -532,7 +732,7 @@
         <strong>Ôn Thi TDV Free</strong> &bull; Nền tảng học và thi trắc nghiệm trực tuyến mở
       </div>
       <div class="footer-note" id="footer-stats-note">
-        Kho dữ liệu 7 môn học &bull; 1.690 câu hỏi &bull; Phát triển vì cộng đồng sinh viên
+        Kho dữ liệu 9 môn học &bull; 2.690 câu hỏi &bull; Phát triển vì cộng đồng sinh viên
       </div>
     </div>
   </footer>
@@ -546,8 +746,12 @@
   <script src="data/thue.js"></script>
   <script src="data/vhkd.js"></script>
   <script src="data/vimo.js"></script>
+  <script src="data/hsk.js"></script>
+  <script src="data/hsk2.js"></script>
+  <script src="data/hsk-handbook.js"></script>
   <script src="quiz-engine.js"></script>
   <script src="navigation.js"></script>
+  <script src="hsk-engine.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

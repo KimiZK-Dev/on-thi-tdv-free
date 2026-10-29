@@ -39,6 +39,16 @@
     return false; // Mở 100% không bảo trì
   }
 
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   var HSKApp = {
     // === HSK 1 HUB ===
     openHsk1Hub: function () {
@@ -210,7 +220,7 @@
     },
 
     exitCbtExam: function () {
-      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      this.stopCurrentAudio();
       clearInterval(timerInterval);
       var examRoom = document.getElementById('cbt-exam-room');
       if (examRoom) examRoom.classList.add('hidden');
@@ -239,38 +249,56 @@
       }, 1000);
     },
 
-    // Phát âm giọng Bắc Kinh (zh-CN) chuẩn
-    playCurrentQuestionAudio: function () {
+    // Phát âm giọng Bắc Kinh (zh-CN) chuẩn quốc tế
+    playCurrentQuestionAudio: function (repeatCount) {
       if (!currentExamData || !currentExamData.questions) return;
       var q = currentExamData.questions[currentQuestionIndex];
-      if (!q || q.section !== 'listening' || !('speechSynthesis' in window)) return;
+      if (!q) return;
 
-      window.speechSynthesis.cancel();
-      var audioText = q.audioText || q.hanzi || '';
+      var count = repeatCount !== undefined ? Number(repeatCount) : (q.section === 'listening' ? 2 : 1);
+      var audioText = q.audioText || q.hanzi || q.questionText || '';
+      if (!audioText) return;
+
       var statusEl = document.getElementById('audio-playing-indicator');
-      if (statusEl) statusEl.textContent = 'Đang phát lần 1: "' + (audioText.length > 25 ? audioText.substring(0, 25) + '...' : audioText) + '"';
+      var playBtn = document.getElementById('btn-play-cbt-audio');
+      if (playBtn) playBtn.classList.add('is-playing');
 
-      var utter1 = new SpeechSynthesisUtterance(audioText);
-      utter1.lang = 'zh-CN';
-      utter1.rate = 0.88;
+      if (window.TDV_TTS && typeof window.TDV_TTS.speak === 'function') {
+        window.TDV_TTS.speak(audioText, {
+          lang: 'zh-CN',
+          repeat: count,
+          pauseMs: 2000,
+          onProgress: function (iter, total, msg) {
+            if (statusEl) statusEl.textContent = msg;
+          },
+          onEnd: function () {
+            if (playBtn) playBtn.classList.remove('is-playing');
+            if (statusEl) statusEl.textContent = 'Đã phát xong ' + (count > 1 ? count + ' lần' : '') + ' (Bấm nút để nghe lại)';
+          },
+          onError: function (err) {
+            if (playBtn) playBtn.classList.remove('is-playing');
+            if (statusEl) statusEl.textContent = 'Lỗi phát âm: ' + (err && err.message ? err.message : 'Không thể phát');
+          }
+        });
+      } else if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        var utter = new SpeechSynthesisUtterance(audioText);
+        utter.lang = 'zh-CN';
+        window.speechSynthesis.speak(utter);
+      }
+    },
 
-      utter1.onend = function () {
-        if (statusEl) statusEl.textContent = 'Nghỉ 2 giây trước lần phát 2...';
-        setTimeout(function () {
-          if (!currentExamData || !currentExamData.questions[currentQuestionIndex] || currentExamData.questions[currentQuestionIndex].id !== q.id) return;
-          if (statusEl) statusEl.textContent = 'Đang phát lần 2...';
-
-          var utter2 = new SpeechSynthesisUtterance(audioText);
-          utter2.lang = 'zh-CN';
-          utter2.rate = 0.88;
-          utter2.onend = function () {
-            if (statusEl) statusEl.textContent = 'Đã phát xong 2 lần (Bấm nút để nghe lại)';
-          };
-          window.speechSynthesis.speak(utter2);
-        }, 2000);
-      };
-
-      window.speechSynthesis.speak(utter1);
+    stopCurrentAudio: function () {
+      if (window.TDV_TTS && typeof window.TDV_TTS.stop === 'function') {
+        window.TDV_TTS.stop();
+      }
+      if (window.speechSynthesis) {
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+      }
+      var playBtn = document.getElementById('btn-play-cbt-audio');
+      if (playBtn) playBtn.classList.remove('is-playing');
+      var statusEl = document.getElementById('audio-playing-indicator');
+      if (statusEl) statusEl.textContent = 'Đã dừng phát âm';
     },
 
     loadQuestion: function (index) {
@@ -302,12 +330,12 @@
       }
 
       // Audio bar
-      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      this.stopCurrentAudio();
       var audioBar = document.getElementById('cbt-audio-bar');
       if (q.section === 'listening') {
         if (audioBar) audioBar.classList.remove('hidden');
         var statusEl = document.getElementById('audio-playing-indicator');
-        if (statusEl) statusEl.textContent = 'Sẵn sàng phát âm (Bấm nút để nghe)';
+        if (statusEl) statusEl.textContent = 'Sẵn sàng phát âm (Bấm nút để nghe 2 lần chuẩn Hanban)';
       } else {
         if (audioBar) audioBar.classList.add('hidden');
       }
@@ -367,9 +395,22 @@
         if (!isSubmitted && questionContent) {
           questionContent = questionContent.replace(/\s*[\(（][^\)）]*[\)）]/g, '').trim();
         }
+
+        var speakTarget = q.audioText || q.hanzi || q.questionText || '';
+        var promptAudioHtml = '';
+        if (speakTarget) {
+          promptAudioHtml = '<div class="prompt-audio-action">' +
+            '<button type="button" class="btn-prompt-audio" onclick="window.HSK_APP.playCurrentQuestionAudio(1)" title="Nghe phát âm chuẩn câu này">' +
+              SVG_ICONS.volume +
+              '<span>Nghe phát âm</span>' +
+            '</button>' +
+          '</div>';
+        }
+
         promptEl.innerHTML = visualHtml + hanziHtml +
           '<div class="q-hanzi-text">' + questionContent + '</div>' +
           (q.pinyin ? '<div class="q-pinyin-text">' + q.pinyin + '</div>' : '') +
+          promptAudioHtml +
           (isSubmitted && q.meaning ? '<div class="q-meaning-text">Dịch nghĩa: ' + q.meaning + '</div>' : '');
       }
 
@@ -642,14 +683,28 @@
 
       var html = '<div class="handbook-vocab-grid">';
       data.forEach(function (w) {
+        var cleanWord = escapeHtml(w.hanzi).replace(/'/g, "\\'");
+        var cleanEx = w.example ? escapeHtml(w.example).replace(/'/g, "\\'") : '';
+
         html += '<div class="handbook-vocab-card">' +
           '<div class="vocab-card-top">' +
-            '<strong class="vocab-hanzi">' + w.hanzi + '</strong>' +
-            '<span class="vocab-pinyin">' + w.pinyin + '</span>' +
+            '<div class="vocab-word-info">' +
+              '<strong class="vocab-hanzi">' + escapeHtml(w.hanzi) + '</strong>' +
+              '<span class="vocab-pinyin">' + escapeHtml(w.pinyin) + '</span>' +
+            '</div>' +
+            '<button type="button" class="btn-vocab-listen" title="Nghe phát âm từ: ' + escapeHtml(w.hanzi) + '" onclick="event.stopPropagation(); window.TDV_TTS.speak(\'' + cleanWord + '\', { lang: \'zh-CN\', repeat: 1 });">' +
+              SVG_ICONS.volume +
+            '</button>' +
           '</div>' +
-          '<div class="vocab-type">' + (w.type || 'Từ vựng') + '</div>' +
-          '<div class="vocab-meaning">' + w.meaning + '</div>' +
-          (w.example ? '<div class="vocab-example">' + w.example + '</div>' : '') +
+          '<div class="vocab-type">' + escapeHtml(w.type || 'Từ vựng') + '</div>' +
+          '<div class="vocab-meaning">' + escapeHtml(w.meaning) + '</div>' +
+          (w.example ? '<div class="vocab-example">' +
+            '<div class="vocab-example-text">' + escapeHtml(w.example) + '</div>' +
+            '<button type="button" class="btn-example-listen" title="Nghe phát âm câu ví dụ" onclick="event.stopPropagation(); window.TDV_TTS.speak(\'' + cleanEx + '\', { lang: \'zh-CN\', repeat: 1 });">' +
+              SVG_ICONS.volume +
+              '<span>Nghe ví dụ</span>' +
+            '</button>' +
+          '</div>' : '') +
         '</div>';
       });
       html += '</div>';
@@ -667,16 +722,23 @@
 
       grammarData.forEach(function (cat) {
         html += '<div class="handbook-grammar-section">' +
-          '<h4 class="grammar-section-title">' + cat.category + '</h4>' +
+          '<h4 class="grammar-section-title">' + escapeHtml(cat.category) + '</h4>' +
           '<div class="grammar-items-list">';
         cat.items.forEach(function (item) {
+          var cleanEx = item.example ? escapeHtml(item.example).replace(/'/g, "\\'") : '';
           html += '<div class="grammar-card">' +
-            '<div class="grammar-name">' + item.name + '</div>' +
-            '<div class="grammar-structure">' + item.structure + '</div>' +
-            '<div class="grammar-example">Ví dụ: ' + item.example + '</div>' +
-            (item.pinyin ? '<div class="grammar-pinyin">' + item.pinyin + '</div>' : '') +
-            (item.meaning ? '<div class="grammar-meaning">Dịch: ' + item.meaning + '</div>' : '') +
-            (item.note ? '<div class="grammar-note">Ghi chú: ' + item.note + '</div>' : '') +
+            '<div class="grammar-card-header">' +
+              '<div class="grammar-name">' + escapeHtml(item.name) + '</div>' +
+              (cleanEx ? '<button type="button" class="btn-grammar-listen" title="Nghe phát âm câu mẫu" onclick="event.stopPropagation(); window.TDV_TTS.speak(\'' + cleanEx + '\', { lang: \'zh-CN\', repeat: 1 });">' +
+                SVG_ICONS.volume +
+                '<span>Nghe câu mẫu</span>' +
+              '</button>' : '') +
+            '</div>' +
+            '<div class="grammar-structure">' + escapeHtml(item.structure) + '</div>' +
+            '<div class="grammar-example">Ví dụ: ' + escapeHtml(item.example) + '</div>' +
+            (item.pinyin ? '<div class="grammar-pinyin">' + escapeHtml(item.pinyin) + '</div>' : '') +
+            (item.meaning ? '<div class="grammar-meaning">Dịch: ' + escapeHtml(item.meaning) + '</div>' : '') +
+            (item.note ? '<div class="grammar-note">Ghi chú: ' + escapeHtml(item.note) + '</div>' : '') +
           '</div>';
         });
         html += '</div></div>';
@@ -745,7 +807,21 @@
     var btnPlayAudio = document.getElementById('btn-play-cbt-audio');
     if (btnPlayAudio) {
       btnPlayAudio.addEventListener('click', function () {
-        window.HSK_APP.playCurrentQuestionAudio();
+        window.HSK_APP.playCurrentQuestionAudio(2);
+      });
+    }
+
+    var btnPlayOnce = document.getElementById('btn-play-once-audio');
+    if (btnPlayOnce) {
+      btnPlayOnce.addEventListener('click', function () {
+        window.HSK_APP.playCurrentQuestionAudio(1);
+      });
+    }
+
+    var btnStopAudio = document.getElementById('btn-stop-audio');
+    if (btnStopAudio) {
+      btnStopAudio.addEventListener('click', function () {
+        window.HSK_APP.stopCurrentAudio();
       });
     }
 

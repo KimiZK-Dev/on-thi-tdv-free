@@ -628,14 +628,25 @@
           <div class="cbt-part-banner" id="cbt-part-banner">一、听力 (Phần Nghe)</div>
           
           <div class="cbt-audio-bar hidden" id="cbt-audio-bar">
-            <button class="btn-audio-play" id="btn-play-cbt-audio" type="button">
-              <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-              </svg>
-              <span>Phát âm câu hỏi</span>
-            </button>
+            <div class="cbt-audio-controls">
+              <button class="btn-audio-play" id="btn-play-cbt-audio" type="button" title="Nghe 2 lần chuẩn Hanban CBT">
+                <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                </svg>
+                <span>Phát âm (Nghe 2 lần)</span>
+              </button>
+              <button class="btn-audio-secondary" id="btn-play-once-audio" type="button" title="Nghe 1 lần nhanh">
+                <span>Nghe 1 lần</span>
+              </button>
+              <button class="btn-audio-stop" id="btn-stop-audio" type="button" title="Dừng phát âm">
+                <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="6" y="6" width="12" height="12" rx="1"></rect>
+                </svg>
+                <span>Dừng</span>
+              </button>
+            </div>
             <div class="audio-playing-indicator" id="audio-playing-indicator">Sẵn sàng phát âm (Bấm nút để nghe)</div>
           </div>
 
@@ -749,6 +760,7 @@
   <script src="data/hsk.js"></script>
   <script src="data/hsk2.js"></script>
   <script src="data/hsk-handbook.js"></script>
+  <script src="tts-engine.js"></script>
   <script src="quiz-engine.js"></script>
   <script src="navigation.js"></script>
   <script src="hsk-engine.js"></script>

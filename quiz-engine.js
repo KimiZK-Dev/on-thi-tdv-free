@@ -550,6 +550,23 @@
         '</button>';
     }
 
+    // Nút Phát âm tiếng Anh cho môn Tiếng Anh 1 (TA1)
+    var audioBtnHtml = '';
+    if (currentState.subjectId === 'ta1') {
+      var speechText = (fullContent.readingText && fullContent.readingText.length < 300) 
+        ? (fullContent.readingText + ' ' + fullContent.questionText) 
+        : fullContent.questionText;
+      audioBtnHtml =
+        '<button type="button" class="btn-audio-speak" data-speak-text="' + escapeHtml(speechText) + '" title="Nghe phát âm tiếng Anh chuẩn">' +
+          '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+            '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>' +
+            '<path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>' +
+            '<path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>' +
+          '</svg>' +
+          '<span>Phát âm</span>' +
+        '</button>';
+    }
+
     html +=
       '<div class="question-header-row">' +
         '<div class="question-number-group">' +
@@ -557,6 +574,7 @@
           resultBadgeHtml +
         '</div>' +
         '<div class="question-actions">' +
+          audioBtnHtml +
           revealBtnHtml +
           '<button type="button" class="btn-bookmark ' + (isBookmarked ? 'active' : '') + '" data-q-index="' + i + '" title="Đánh dấu câu hỏi này">' +
             bookmarkIcon +
@@ -734,6 +752,17 @@
       passageToggleBtn.addEventListener('click', function (e) {
         e.stopPropagation();
         togglePassageCollapse(qIndex);
+      });
+    }
+
+    var audioBtn = card.querySelector('.btn-audio-speak');
+    if (audioBtn) {
+      audioBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var txt = this.getAttribute('data-speak-text');
+        if (window.TDV_TTS && txt) {
+          window.TDV_TTS.speak(txt, { lang: 'en', repeat: 1 });
+        }
       });
     }
   }

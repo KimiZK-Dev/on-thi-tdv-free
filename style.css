@@ -2669,11 +2669,20 @@ a {
 .cbt-audio-bar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
   padding: 0.85rem 1.15rem;
   background: var(--primary-light);
   border: 1px solid rgba(37, 99, 235, 0.25);
   border-radius: var(--radius-md);
+  flex-wrap: wrap;
+}
+
+.cbt-audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .btn-audio-play {
@@ -2688,17 +2697,99 @@ a {
   font-weight: 600;
   font-size: 0.875rem;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: all 0.15s ease;
 }
 
 .btn-audio-play:hover {
   background: var(--primary-hover);
 }
 
+.btn-audio-play.is-playing {
+  background: var(--success);
+  animation: pulse-audio 1.5s infinite;
+}
+
+@keyframes pulse-audio {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); }
+  50% { transform: scale(1.02); box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+
+.btn-audio-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.9rem;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-audio-secondary:hover {
+  background: var(--bg-secondary);
+  border-color: var(--border-strong);
+}
+
+.btn-audio-stop {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.85rem;
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid var(--danger-border);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-audio-stop:hover {
+  background: var(--danger);
+  color: #ffffff;
+}
+
 .audio-playing-indicator {
   font-size: 0.85rem;
   color: var(--text-secondary);
   font-style: italic;
+  font-weight: 500;
+}
+
+/* Prompt Inline Audio Button */
+.prompt-audio-action {
+  margin: 0.35rem 0 0.5rem;
+}
+
+.btn-prompt-audio {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-prompt-audio:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.btn-prompt-audio svg {
+  width: 16px;
+  height: 16px;
 }
 
 /* Shared Context Box (A-F) */
@@ -3452,8 +3543,16 @@ a {
 
 .vocab-card-top {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.vocab-word-info {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .vocab-hanzi {
@@ -3466,6 +3565,33 @@ a {
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--text-muted);
+}
+
+.btn-vocab-listen {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-secondary);
+  color: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.btn-vocab-listen:hover {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  transform: scale(1.05);
+}
+
+.btn-vocab-listen svg {
+  width: 15px;
+  height: 15px;
 }
 
 .vocab-type {
@@ -3482,12 +3608,47 @@ a {
 }
 
 .vocab-example {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
   font-size: 0.8rem;
   color: var(--text-secondary);
   font-style: italic;
-  margin-top: 0.25rem;
+  margin-top: 0.35rem;
   border-top: 1px dashed var(--border-subtle);
   padding-top: 0.35rem;
+}
+
+.vocab-example-text {
+  flex: 1;
+}
+
+.btn-example-listen {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  color: var(--primary);
+  font-size: 0.725rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-style: normal;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.btn-example-listen:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.btn-example-listen svg {
+  width: 13px;
+  height: 13px;
 }
 
 .handbook-grammar-section {
@@ -3520,10 +3681,43 @@ a {
   gap: 0.35rem;
 }
 
+.grammar-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
 .grammar-name {
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--primary);
+}
+
+.btn-grammar-listen {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background: var(--primary-light);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-grammar-listen:hover {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.btn-grammar-listen svg {
+  width: 14px;
+  height: 14px;
 }
 
 .grammar-structure {
@@ -3555,6 +3749,32 @@ a {
   font-size: 0.8rem;
   color: var(--warning);
   font-style: italic;
+}
+
+/* Quiz Card Audio Speak Button (e.g. TA1) */
+.btn-audio-speak {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-audio-speak:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.btn-audio-speak .ui-icon {
+  width: 15px;
+  height: 15px;
 }
 
 /* Responsive CBT & Handbook Styles */

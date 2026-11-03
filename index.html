@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <meta name="referrer" content="no-referrer" />
   <title>Ôn Thi TDV Free - Ngân Hàng Đề Thi Trắc Nghiệm Mở</title>
   <meta name="description" content="Nền tảng ôn thi trắc nghiệm TDV hoàn toàn miễn phí, không cần đăng nhập hay kích hoạt. Hơn 1.380 câu hỏi chuẩn xác, có đáp án và giải thích chi tiết." />
   <meta name="keywords" content="ôn thi tdv, trắc nghiệm tdv, tiếng anh 1, kinh tế vi mô, kinh tế vĩ mô, lập dự án đầu tư, văn hóa kinh doanh, chủ nghĩa xã hội khoa học" />
@@ -22,6 +23,9 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Trình phát âm thanh ẩn chuẩn quốc tế (Chống Referer Blocking 404) -->
+  <audio id="tdv-tts-player" class="hidden" preload="auto" referrerpolicy="no-referrer"></audio>
+  
   <!-- Header chính toàn trang -->
   <header class="app-header" id="app-header">
     <div class="header-container">

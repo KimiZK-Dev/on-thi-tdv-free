@@ -214,6 +214,19 @@
       description: 'Trọn bộ 10 đề thi thực chiến HSK 2 (600 câu hỏi), ma trận 60 câu/đề (35 Nghe + 25 Đọc), bám sát 770+ từ vựng và cấu trúc ngữ pháp.',
       tags: ['10 Đề thi CBT (600 câu)', '35 câu Nghe hiểu', '25 câu Đọc hiểu', '770+ Từ vựng CTI'],
       tabs: []
+    },
+    {
+      id: 'hsk3',
+      code: 'HSK3',
+      name: 'Tiếng Trung HSK 3 (CTI)',
+      phase: 'Chứng chỉ CTI',
+      phaseType: 'final',
+      examTypes: ['cuoiky'],
+      icon: 'award',
+      color: '#991b1b',
+      description: 'Trọn bộ 20 đề thi thật HSK 3 chuẩn Hanban CTI quốc tế (1.600 câu hỏi), đủ 3 kỹ năng Nghe - Đọc - Viết, giọng phát âm Bắc Kinh chuẩn, chấm điểm thang 300 điểm.',
+      tags: ['20 Đề thi CBT (1.600 câu)', '40 câu Nghe hiểu', '30 câu Đọc hiểu', '10 câu Viết'],
+      tabs: []
     }
   ];
 

@@ -1,10 +1,12 @@
 /**
- * ÔN THI TDV FREE - HSK CBT ENGINE (HSK 1 & HSK 2)
- * Chuẩn đề thi quốc tế Hanban CTI (HSK 1: H11001-H11010; HSK 2: H20901-H21338)
+ * ÔN THI TDV FREE - HSK CBT ENGINE (HSK 1, HSK 2 & HSK 3)
+ * Chuẩn đề thi quốc tế Hanban CTI:
+ *   - HSK 1: 10 Đề x 40 câu = 400 câu hỏi (H11001-H11010) • Thang 200 điểm (Đạt >= 120)
+ *   - HSK 2: 10 Đề x 60 câu = 600 câu hỏi (H20901-H21338) • Thang 200 điểm (Đạt >= 120)
+ *   - HSK 3: 20 Đề x 80 câu = 1.600 câu hỏi (H31001-H31335) • Thang 300 điểm (Đạt >= 180)
  * 100% Miễn phí & Mở toàn diện (Zero Paywall, Zero Locks, 0 Emoji)
- * Phát âm giọng Bắc Kinh chuẩn (zh-CN) qua Web Speech API
- * Thang điểm 200 Hanban (Nghe 100 + Đọc 100, Đạt >= 120 điểm)
- * Sổ tay tra cứu 920+ từ vựng & ngữ pháp cốt lõi
+ * Tích hợp TDV_TTS V2.0 phát âm chuẩn quốc tế chống lỗi 404
+ * Sổ tay tra cứu 920+ từ vựng & cấu trúc ngữ pháp cốt lõi
  */
 
 (function (window, document) {
@@ -87,6 +89,27 @@
     },
 
     closeHsk2Hub: function () {
+      if (window.TDV_NAV && typeof window.TDV_NAV.goHome === 'function') {
+        window.TDV_NAV.goHome();
+      }
+    },
+
+    // === HSK 3 HUB ===
+    openHsk3Hub: function () {
+      if (window.TDV_NAV && typeof window.TDV_NAV.switchView === 'function') {
+        window.TDV_NAV.switchView('hsk3-hub-view');
+      } else {
+        var hub3 = document.getElementById('hsk3-hub-view');
+        if (hub3) hub3.classList.remove('hidden');
+      }
+      currentHskLevel = 'hsk3';
+      this.renderHsk3ExamList();
+      if (typeof window.scrollTo === 'function') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    },
+
+    closeHsk3Hub: function () {
       if (window.TDV_NAV && typeof window.TDV_NAV.goHome === 'function') {
         window.TDV_NAV.goHome();
       }
@@ -175,6 +198,49 @@
       listEl.innerHTML = examsHtml.join('');
     },
 
+    // RENDER HSK 3 EXAMS
+    renderHsk3ExamList: function () {
+      var listEl = document.getElementById('hsk3-exam-list');
+      if (!listEl) return;
+
+      var exams = window.HSK3_EXAMS || [];
+      var examsHtml = [];
+
+      for (var i = 0; i < exams.length; i++) {
+        var exam = exams[i];
+        var examNum = i + 1;
+        var codeNum = String(examNum).padStart(2, '0');
+        var examCode = exam.code || exam.id || ('H310' + codeNum);
+        var title = exam.title || ('Đề số ' + codeNum + ' - HSK 3 Chuẩn Hanban (' + examCode + ')');
+
+        var cardHtml = '<div class="hsk-exam-card">' +
+          '<div class="hsk-exam-card-header">' +
+            '<div class="hsk-exam-code-tag">' + examCode + '</div>' +
+            '<span class="badge-free">Miễn phí 100%</span>' +
+          '</div>' +
+          '<div class="hsk-exam-card-body">' +
+            '<h3 class="hsk-exam-title">' + escapeHtml(title) + '</h3>' +
+            '<div class="hsk-exam-meta">' +
+              '<span>40 câu Nghe</span> &bull; <span>30 câu Đọc</span> &bull; <span>10 câu Viết</span> &bull; <span>90 phút</span>' +
+            '</div>' +
+            '<p class="hsk-exam-desc">' +
+              'Đề thi thật chuẩn Hanban CTI quốc tế mã ' + examCode + ' (thang điểm 300, đạt >= 180 điểm). Đầy đủ 3 phần Nghe, Đọc và Viết.' +
+            '</p>' +
+          '</div>' +
+          '<div class="hsk-exam-card-footer">' +
+            '<button type="button" class="btn-start-cbt" onclick="window.HSK_APP.startCbtExam(' + examNum + ', \'hsk3\')">' +
+              '<span>Vào phòng thi CBT</span>' +
+              SVG_ICONS.arrowRight +
+            '</button>' +
+          '</div>' +
+        '</div>';
+
+        examsHtml.push(cardHtml);
+      }
+
+      listEl.innerHTML = examsHtml.join('');
+    },
+
     // -------------------------------------------------------------
     // KHỞI CHẠY PHÒNG THI CBT
     // -------------------------------------------------------------
@@ -184,8 +250,17 @@
       var num = Number(examNumber) || 1;
 
       currentExamNumber = num;
-      var repo = (lvl === 'hsk2') ? (window.HSK2_EXAM_REPOSITORY || {}) : (window.HSK1_EXAM_REPOSITORY || {});
-      currentExamData = repo[num];
+
+      if (lvl === 'hsk3') {
+        var repo3 = window.HSK3_EXAM_REPOSITORY || {};
+        currentExamData = repo3[num] || (window.HSK3_EXAMS ? window.HSK3_EXAMS[num - 1] : null);
+      } else if (lvl === 'hsk2') {
+        var repo2 = window.HSK2_EXAM_REPOSITORY || {};
+        currentExamData = repo2[num];
+      } else {
+        var repo1 = window.HSK1_EXAM_REPOSITORY || {};
+        currentExamData = repo1[num];
+      }
 
       if (!currentExamData || !currentExamData.questions) {
         return;
@@ -195,7 +270,8 @@
       userAnswers = {};
       isSubmitted = false;
 
-      var duration = currentExamData.durationMinutes || (lvl === 'hsk2' ? 55 : 35);
+      var defaultDuration = (lvl === 'hsk3') ? 90 : (lvl === 'hsk2' ? 55 : 35);
+      var duration = currentExamData.durationMinutes || currentExamData.duration || defaultDuration;
       remainingSeconds = duration * 60;
 
       var examRoom = document.getElementById('cbt-exam-room');
@@ -203,8 +279,9 @@
 
       var examNameEl = document.getElementById('cbt-exam-name');
       if (examNameEl) {
-        var levelText = (lvl === 'hsk2') ? 'HSK 2' : 'HSK 1';
-        examNameEl.textContent = 'Phòng thi ' + levelText + ' CBT – Đề ' + String(num).padStart(2, '0') + ' (' + (currentExamData.examCode || '') + ')';
+        var levelText = (lvl === 'hsk3') ? 'HSK 3' : ((lvl === 'hsk2') ? 'HSK 2' : 'HSK 1');
+        var examCodeDisplay = currentExamData.examCode || currentExamData.code || '';
+        examNameEl.textContent = 'Phòng thi ' + levelText + ' CBT – Đề ' + String(num).padStart(2, '0') + (examCodeDisplay ? ' (' + examCodeDisplay + ')' : '');
       }
 
       var scorePopup = document.getElementById('cbt-score-popup');
@@ -249,14 +326,15 @@
       }, 1000);
     },
 
-    // Phát âm giọng Bắc Kinh (zh-CN) chuẩn quốc tế
+    // Phát âm giọng Bắc Kinh (zh-CN) chuẩn quốc tế qua TDV_TTS
     playCurrentQuestionAudio: function (repeatCount) {
       if (!currentExamData || !currentExamData.questions) return;
       var q = currentExamData.questions[currentQuestionIndex];
       if (!q) return;
 
       var count = repeatCount !== undefined ? Number(repeatCount) : (q.section === 'listening' ? 2 : 1);
-      var audioText = q.audioText || q.hanzi || q.questionText || '';
+      // Ưu tiên transcript hội thoại nếu là câu hỏi nghe
+      var audioText = q.transcript || q.audioText || q.hanzi || q.questionText || q.prompt || '';
       if (!audioText) return;
 
       var statusEl = document.getElementById('audio-playing-indicator');
@@ -301,23 +379,62 @@
       if (statusEl) statusEl.textContent = 'Đã dừng phát âm';
     },
 
+    // Xử lý điền từ vào bài thi Viết HSK 3
+    appendWordToWriting: function (qId, word) {
+      if (isSubmitted) return;
+      var cur = userAnswers[qId] || '';
+      var next = cur ? (cur + word) : word;
+      userAnswers[qId] = next;
+      var input = document.getElementById('writing-input-' + qId);
+      if (input) input.value = next;
+      this.renderPalette();
+    },
+
+    onWritingInput: function (qId, val) {
+      if (isSubmitted) return;
+      userAnswers[qId] = val;
+      this.renderPalette();
+    },
+
+    clearWritingInput: function (qId) {
+      if (isSubmitted) return;
+      userAnswers[qId] = '';
+      var input = document.getElementById('writing-input-' + qId);
+      if (input) input.value = '';
+      this.renderPalette();
+    },
+
+    selectHanziCandidate: function (qId, char) {
+      if (isSubmitted) return;
+      userAnswers[qId] = char;
+      var input = document.getElementById('writing-input-' + qId);
+      if (input) input.value = char;
+      this.renderPalette();
+    },
+
     loadQuestion: function (index) {
       if (!currentExamData || !currentExamData.questions) return;
       var questions = currentExamData.questions;
       if (!questions.length) return;
       currentQuestionIndex = index;
       var q = questions[index];
+      var qId = q.id !== undefined ? String(q.id) : String(index + 1);
 
-      var listeningTotal = currentExamData.listeningCount || (currentHskLevel === 'hsk2' ? 35 : 20);
-      var readingTotal = currentExamData.readingCount || (currentHskLevel === 'hsk2' ? 25 : 20);
+      var isHsk3 = (currentHskLevel === 'hsk3');
+      var listeningTotal = currentExamData.listeningCount || (isHsk3 ? 40 : (currentHskLevel === 'hsk2' ? 35 : 20));
+      var readingTotal = currentExamData.readingCount || (isHsk3 ? 30 : (currentHskLevel === 'hsk2' ? 25 : 20));
+      var writingTotal = currentExamData.writingCount || (isHsk3 ? 10 : 0);
 
       // Cập nhật tiêu đề phần thi
       var bannerEl = document.getElementById('cbt-part-banner');
       if (bannerEl) {
-        var partName = q.section === 'listening' 
-          ? '一、听力 (Phần Nghe: Câu ' + (q.number || (index + 1)) + ' / ' + listeningTotal + ')' 
-          : '二、阅读 (Phần Đọc: Câu ' + (q.number || (index + 1)) + ' / ' + questions.length + ')';
-        bannerEl.textContent = partName;
+        var partName = '一、听力 (Phần Nghe)';
+        if (q.section === 'reading') {
+          partName = '二、阅读 (Phần Đọc)';
+        } else if (q.section === 'writing') {
+          partName = '三、书写 (Phần Viết)';
+        }
+        bannerEl.textContent = partName + ' • Câu ' + (q.number || (index + 1)) + ' / ' + questions.length;
       }
 
       // Cập nhật số câu
@@ -326,10 +443,16 @@
 
       var skillEl = document.getElementById('q-skill-label');
       if (skillEl) {
-        skillEl.textContent = q.section === 'listening' ? 'Kỹ năng: Nghe hiểu (' + listeningTotal + ' câu)' : 'Kỹ năng: Đọc hiểu (' + readingTotal + ' câu)';
+        if (q.section === 'listening') {
+          skillEl.textContent = 'Kỹ năng: Nghe hiểu (' + listeningTotal + ' câu)';
+        } else if (q.section === 'reading') {
+          skillEl.textContent = 'Kỹ năng: Đọc hiểu (' + readingTotal + ' câu)';
+        } else if (q.section === 'writing') {
+          skillEl.textContent = 'Kỹ năng: Viết (' + writingTotal + ' câu)';
+        }
       }
 
-      // Audio bar
+      // Audio bar: chỉ hiển thị ở phần thi Nghe
       this.stopCurrentAudio();
       var audioBar = document.getElementById('cbt-audio-bar');
       if (q.section === 'listening') {
@@ -340,9 +463,11 @@
         if (audioBar) audioBar.classList.add('hidden');
       }
 
-      // Shared Panel (nếu có)
+      // Shared Context (Hỗ trợ cả sharedPanels của HSK 1/2 và sharedGroups của HSK 3)
       var sharedBox = document.getElementById('cbt-shared-context');
       var sharedPanels = currentExamData.sharedPanels || {};
+      var sharedGroups = currentExamData.sharedGroups || {};
+
       if (q.sharedPanelId && sharedPanels[q.sharedPanelId]) {
         if (sharedBox) {
           sharedBox.classList.remove('hidden');
@@ -365,6 +490,26 @@
           '</div>';
           sharedBox.innerHTML = sharedHtml;
         }
+      } else if (q.groupRef && sharedGroups[q.groupRef]) {
+        if (sharedBox) {
+          sharedBox.classList.remove('hidden');
+          var grp = sharedGroups[q.groupRef];
+          var grpOptions = grp.options || [];
+          var grpHtml = '<div class="shared-panel-title">' + escapeHtml(grp.instruction || 'Dữ liệu lựa chọn dùng chung') + '</div>' +
+            '<div class="shared-groups-grid">' +
+            grpOptions.map(function (opt) {
+              var optKey = opt.key || '';
+              var optLabel = opt.label || opt.text || '';
+              var optDesc = opt.desc || '';
+              return '<div class="shared-group-card">' +
+                '<div class="shared-key">' + optKey + '</div>' +
+                (optLabel ? '<div class="shared-desc"><strong>' + escapeHtml(optLabel) + '</strong></div>' : '') +
+                (optDesc ? '<div class="shared-desc">' + escapeHtml(optDesc) + '</div>' : '') +
+              '</div>';
+            }).join('') +
+            '</div>';
+          sharedBox.innerHTML = grpHtml;
+        }
       } else {
         if (sharedBox) sharedBox.classList.add('hidden');
       }
@@ -375,28 +520,41 @@
         var visualHtml = '';
         if (q.imageUrl) {
           visualHtml = '<div class="prompt-visual-image">' +
-            '<img src="' + q.imageUrl + '" alt="Hình minh họa câu ' + q.number + '" />' +
-            (isSubmitted && q.promptVisual ? '<div class="prompt-visual-caption">' + SVG_ICONS.image + '<span>' + q.promptVisual + '</span></div>' : '') +
+            '<img src="' + q.imageUrl + '" alt="Hình minh họa câu ' + (q.number || (index + 1)) + '" />' +
+            (isSubmitted && q.promptVisual ? '<div class="prompt-visual-caption">' + SVG_ICONS.image + '<span>' + escapeHtml(q.promptVisual) + '</span></div>' : '') +
           '</div>';
         } else if (isSubmitted && q.promptVisual) {
-          visualHtml = '<div class="prompt-visual-badge">' + SVG_ICONS.image + '<span>Hình ảnh đề bài: ' + q.promptVisual + '</span></div>';
+          visualHtml = '<div class="prompt-visual-badge">' + SVG_ICONS.image + '<span>Hình ảnh đề bài: ' + escapeHtml(q.promptVisual) + '</span></div>';
         }
 
         var hanziHtml = '';
         if (q.contextHanzi) {
           hanziHtml = '<div class="hanzi-context-box">' +
-            '<div class="hanzi-context-main">' + q.contextHanzi + '</div>' +
-            (q.contextPinyin ? '<div class="hanzi-context-pinyin">' + q.contextPinyin + '</div>' : '') +
-            (isSubmitted && q.contextMeaning ? '<div class="hanzi-context-meaning">Dịch nghĩa: ' + q.contextMeaning + '</div>' : '') +
+            '<div class="hanzi-context-main">' + escapeHtml(q.contextHanzi) + '</div>' +
+            (q.contextPinyin ? '<div class="hanzi-context-pinyin">' + escapeHtml(q.contextPinyin) + '</div>' : '') +
+            (isSubmitted && q.contextMeaning ? '<div class="hanzi-context-meaning">Dịch nghĩa: ' + escapeHtml(q.contextMeaning) + '</div>' : '') +
           '</div>';
         }
 
-        var questionContent = q.questionText || q.hanzi || '';
+        // Đoạn văn đọc hiểu (Reading Passage)
+        var passageHtml = '';
+        if (q.passage) {
+          passageHtml = '<div class="reading-passage-box">' + escapeHtml(q.passage) + '</div>';
+        }
+
+        // Nhận định đúng sai (True / False statement)
+        var statementHtml = '';
+        if (q.statement) {
+          statementHtml = '<div class="q-hanzi-statement">★ ' + escapeHtml(q.statement) + '</div>';
+        }
+
+        var questionContent = q.questionText || q.hanzi || q.prompt || '';
         if (!isSubmitted && questionContent) {
           questionContent = questionContent.replace(/\s*[\(（][^\)）]*[\)）]/g, '').trim();
         }
 
-        var speakTarget = q.audioText || q.hanzi || q.questionText || '';
+        // Nút phát âm trực tiếp câu này
+        var speakTarget = q.transcript || q.audioText || q.hanzi || q.questionText || '';
         var promptAudioHtml = '';
         if (speakTarget) {
           promptAudioHtml = '<div class="prompt-audio-action">' +
@@ -407,9 +565,45 @@
           '</div>';
         }
 
-        promptEl.innerHTML = visualHtml + hanziHtml +
-          '<div class="q-hanzi-text">' + questionContent + '</div>' +
+        // Khu vực giao diện bài tập Viết (Writing)
+        var writingAreaHtml = '';
+        if (q.type === 'writing_reorder') {
+          var words = q.words || [];
+          var currentVal = userAnswers[qId] || '';
+          var chipsHtml = words.map(function (w) {
+            return '<button type="button" class="writing-chip-btn" onclick="window.HSK_APP.appendWordToWriting(\'' + qId + '\', \'' + escapeHtml(w).replace(/'/g, "\\'") + '\')">' + escapeHtml(w) + '</button>';
+          }).join('');
+
+          writingAreaHtml = '<div class="writing-reorder-wrap">' +
+            '<div class="writing-chips-label">Bấm vào các khối từ dưới đây để ghép thành câu hoàn chỉnh:</div>' +
+            '<div class="writing-word-chips">' + chipsHtml + '</div>' +
+            '<div class="writing-input-row">' +
+              '<input type="text" id="writing-input-' + qId + '" class="writing-sentence-input" placeholder="Câu hoàn chỉnh sau khi ghép..." value="' + escapeHtml(currentVal) + '" oninput="window.HSK_APP.onWritingInput(\'' + qId + '\', this.value)" ' + (isSubmitted ? 'readonly' : '') + ' />' +
+              (!isSubmitted ? '<button type="button" class="btn-clear-writing" onclick="window.HSK_APP.clearWritingInput(\'' + qId + '\')">Xóa câu làm lại</button>' : '') +
+            '</div>' +
+          '</div>';
+        } else if (q.type === 'writing_hanzi') {
+          var currentVal = userAnswers[qId] || '';
+          var candidates = q.imeCandidates || [];
+          var imeHtml = candidates.map(function (cand) {
+            return '<button type="button" class="ime-candidate-btn" onclick="window.HSK_APP.selectHanziCandidate(\'' + qId + '\', \'' + cand + '\')">' + cand + '</button>';
+          }).join('');
+
+          writingAreaHtml = '<div class="writing-hanzi-wrap">' +
+            '<div class="writing-sentence-preview">' +
+              escapeHtml(q.sentencePrefix || '') +
+              '<input type="text" id="writing-input-' + qId + '" class="writing-hanzi-input" maxlength="4" value="' + escapeHtml(currentVal) + '" oninput="window.HSK_APP.onWritingInput(\'' + qId + '\', this.value)" ' + (isSubmitted ? 'readonly' : '') + ' placeholder="?" />' +
+              escapeHtml(q.sentenceSuffix || '') +
+            '</div>' +
+            (q.pinyinPrompt ? '<div class="pinyin-prompt-badge">Bính âm cần viết: <strong>' + escapeHtml(q.pinyinPrompt) + '</strong></div>' : '') +
+            (!isSubmitted && candidates.length ? '<div class="writing-chips-label">Chọn nhanh chữ Hán:</div><div class="ime-candidates-wrap">' + imeHtml + '</div>' : '') +
+          '</div>';
+        }
+
+        promptEl.innerHTML = visualHtml + hanziHtml + passageHtml + statementHtml +
+          (questionContent ? '<div class="q-hanzi-text">' + questionContent + '</div>' : '') +
           (q.pinyin ? '<div class="q-pinyin-text">' + q.pinyin + '</div>' : '') +
+          writingAreaHtml +
           promptAudioHtml +
           (isSubmitted && q.meaning ? '<div class="q-meaning-text">Dịch nghĩa: ' + q.meaning + '</div>' : '');
       }
@@ -417,36 +611,42 @@
       // Options
       var optContainer = document.getElementById('q-options-area') || document.getElementById('q-options-container');
       if (optContainer) {
-        var options = q.options || [];
-        var selectedVal = userAnswers[q.id];
+        if (q.type === 'writing_reorder' || q.type === 'writing_hanzi') {
+          // Với phần thi viết, ô nhập đã nằm ở promptArea
+          optContainer.innerHTML = '';
+        } else {
+          var options = q.options || [];
+          var selectedVal = userAnswers[qId];
 
-        var optsHtml = options.map(function (opt) {
-          var isChosen = (selectedVal === opt.key);
-          var cls = 'cbt-opt-btn';
-          if (isChosen) cls += ' selected';
-          if (isSubmitted) {
-            if (opt.key === q.answer) cls += ' is-correct-answer';
-            else if (isChosen) cls += ' is-wrong-answer';
-          }
-
-          var optLabel = opt.label || '';
-          if (!isSubmitted) {
-            if (opt.key === 'T') {
-              optLabel = 'Đúng (对)';
-            } else if (opt.key === 'F') {
-              optLabel = 'Sai (错)';
-            } else if (optLabel) {
-              optLabel = optLabel.replace(/\s*[\(（][^\)）]*[\)）]/g, '').trim();
+          var optsHtml = options.map(function (opt) {
+            var optKey = (typeof opt === 'string') ? opt : (opt.key || opt.value || '');
+            var isChosen = (selectedVal === optKey);
+            var cls = 'cbt-opt-btn';
+            if (isChosen) cls += ' selected';
+            if (isSubmitted) {
+              if (optKey === q.answer) cls += ' is-correct-answer';
+              else if (isChosen) cls += ' is-wrong-answer';
             }
-          }
-          var labelHtml = (optLabel && optLabel !== opt.key) ? '<span class="opt-label-text">' + optLabel + '</span>' : '';
-          return '<button type="button" class="' + cls + '" onclick="window.HSK_APP.selectOption(\'' + q.id + '\', \'' + opt.key + '\')">' +
-            '<span class="opt-key-badge">' + opt.key + '</span>' +
-            labelHtml +
-          '</button>';
-        });
 
-        optContainer.innerHTML = optsHtml.join('');
+            var optLabel = (typeof opt === 'string') ? '' : (opt.label || opt.text || '');
+            if (!isSubmitted) {
+              if (optKey === 'T') {
+                optLabel = 'Đúng (对)';
+              } else if (optKey === 'F') {
+                optLabel = 'Sai (错)';
+              } else if (optLabel) {
+                optLabel = optLabel.replace(/\s*[\(（][^\)）]*[\)）]/g, '').trim();
+              }
+            }
+            var labelHtml = (optLabel && optLabel !== optKey) ? '<span class="opt-label-text">' + escapeHtml(optLabel) + '</span>' : '';
+            return '<button type="button" class="' + cls + '" onclick="window.HSK_APP.selectOption(\'' + qId + '\', \'' + optKey + '\')">' +
+              '<span class="opt-key-badge">' + optKey + '</span>' +
+              labelHtml +
+            '</button>';
+          });
+
+          optContainer.innerHTML = optsHtml.join('');
+        }
       }
 
       // Explanation (khi đã nộp bài)
@@ -454,19 +654,41 @@
       if (expBox) {
         if (isSubmitted) {
           expBox.classList.remove('hidden');
-          var isUserCorrect = (userAnswers[q.id] === q.answer);
+
+          var userAns = String(userAnswers[qId] || '').trim();
+          var isUserCorrect = false;
+
+          if (q.acceptedAnswers && Array.isArray(q.acceptedAnswers)) {
+            var normAns = userAns.replace(/[。\.]$/, '');
+            isUserCorrect = q.acceptedAnswers.some(function (a) {
+              return String(a).trim() === userAns || String(a).trim().replace(/[。\.]$/, '') === normAns;
+            });
+          } else {
+            isUserCorrect = (userAns.toLowerCase() === String(q.answer || '').trim().toLowerCase());
+          }
+
+          var correctDisplay = q.answer || (q.acceptedAnswers ? q.acceptedAnswers.join(' / ') : '');
           var meaningInfo = '';
           if (q.meaning) {
             meaningInfo = '<div class="exp-meaning-box">' +
               '<strong>Dịch nghĩa câu: </strong>' + q.meaning +
             '</div>';
           }
+
+          var transcriptInfo = '';
+          if (q.transcript) {
+            transcriptInfo = '<div class="exp-transcript-box">' +
+              '<strong>Nội dung bài nghe: </strong>' + escapeHtml(q.transcript) +
+            '</div>';
+          }
+
           expBox.innerHTML = '<div class="exp-status-row">' +
             (isUserCorrect ? SVG_ICONS.check : SVG_ICONS.cross) +
             '<strong class="' + (isUserCorrect ? 'text-success' : 'text-danger') + '">' +
-              (isUserCorrect ? 'Bạn đã trả lời đúng' : 'Bạn trả lời sai — Đáp án đúng là: ' + q.answer) +
+              (isUserCorrect ? 'Bạn đã trả lời đúng' : 'Bạn trả lời: "' + (userAns || 'Chưa làm') + '" — Đáp án chuẩn: "' + correctDisplay + '"') +
             '</strong>' +
           '</div>' +
+          transcriptInfo +
           meaningInfo +
           '<div class="exp-detail-text">' +
             '<strong>Giải thích chi tiết: </strong>' + (q.explanation || 'Không có giải thích chi tiết cho câu hỏi này.') +
@@ -498,29 +720,53 @@
       if (!currentExamData || !currentExamData.questions) return;
       var questions = currentExamData.questions;
 
+      var isHsk3 = (currentHskLevel === 'hsk3');
+      var listeningTotal = currentExamData.listeningCount || (isHsk3 ? 40 : (currentHskLevel === 'hsk2' ? 35 : 20));
+      var readingTotal = currentExamData.readingCount || (isHsk3 ? 30 : (currentHskLevel === 'hsk2' ? 25 : 20));
+
       var listenGrid = document.getElementById('palette-listening');
       var readGrid = document.getElementById('palette-reading');
+      var writeGrid = document.getElementById('palette-writing');
+      var writeSection = document.getElementById('palette-group-writing');
 
       var listenHtml = [];
       var readHtml = [];
-      var listeningTotal = currentExamData.listeningCount || (currentHskLevel === 'hsk2' ? 35 : 20);
+      var writeHtml = [];
 
       var listenTitle = document.getElementById('palette-listen-title');
       var readTitle = document.getElementById('palette-read-title');
+      var writeTitle = document.getElementById('palette-write-title');
+
       if (listenTitle) listenTitle.textContent = '一、听力 (Phần Nghe: 1 – ' + listeningTotal + ')';
-      if (readTitle) readTitle.textContent = '二、阅读 (Phần Đọc: ' + (listeningTotal + 1) + ' – ' + questions.length + ')';
+      if (readTitle) readTitle.textContent = '二、阅读 (Phần Đọc: ' + (listeningTotal + 1) + ' – ' + (listeningTotal + readingTotal) + ')';
+      if (writeTitle) writeTitle.textContent = '三、书写 (Phần Viết: ' + (listeningTotal + readingTotal + 1) + ' – ' + questions.length + ')';
+
+      if (writeSection) {
+        if (isHsk3) writeSection.classList.remove('hidden');
+        else writeSection.classList.add('hidden');
+      }
 
       for (var i = 0; i < questions.length; i++) {
         var q = questions[i];
+        var qId = q.id !== undefined ? String(q.id) : String(i + 1);
         var isCurrent = (i === currentQuestionIndex);
-        var isAnswered = (userAnswers[q.id] !== undefined);
+        var isAnswered = (userAnswers[qId] !== undefined && userAnswers[qId] !== '');
 
         var btnClass = 'cbt-palette-item';
         if (isCurrent) btnClass += ' current';
         if (isAnswered) btnClass += ' answered';
 
         if (isSubmitted) {
-          var isCorrect = (userAnswers[q.id] === q.answer);
+          var userAns = String(userAnswers[qId] || '').trim();
+          var isCorrect = false;
+          if (q.acceptedAnswers && Array.isArray(q.acceptedAnswers)) {
+            var normAns = userAns.replace(/[。\.]$/, '');
+            isCorrect = q.acceptedAnswers.some(function (a) {
+              return String(a).trim() === userAns || String(a).trim().replace(/[。\.]$/, '') === normAns;
+            });
+          } else {
+            isCorrect = (userAns.toLowerCase() === String(q.answer || '').trim().toLowerCase());
+          }
           btnClass += isCorrect ? ' correct' : ' wrong';
         }
 
@@ -530,13 +776,16 @@
 
         if (i < listeningTotal) {
           listenHtml.push(itemHtml);
-        } else {
+        } else if (i < listeningTotal + readingTotal) {
           readHtml.push(itemHtml);
+        } else {
+          writeHtml.push(itemHtml);
         }
       }
 
       if (listenGrid) listenGrid.innerHTML = listenHtml.join('');
       if (readGrid) readGrid.innerHTML = readHtml.join('');
+      if (writeGrid) writeGrid.innerHTML = writeHtml.join('');
     },
 
     submitCbtExam: function () {
@@ -546,38 +795,61 @@
 
       var questions = currentExamData.questions;
       var totalCount = questions.length;
-      var listeningTotal = currentExamData.listeningCount || (currentHskLevel === 'hsk2' ? 35 : 20);
-      var readingTotal = currentExamData.readingCount || (currentHskLevel === 'hsk2' ? 25 : 20);
+      var isHsk3 = (currentHskLevel === 'hsk3');
+      var listeningTotal = currentExamData.listeningCount || (isHsk3 ? 40 : (currentHskLevel === 'hsk2' ? 35 : 20));
+      var readingTotal = currentExamData.readingCount || (isHsk3 ? 30 : (currentHskLevel === 'hsk2' ? 25 : 20));
+      var writingTotal = isHsk3 ? (currentExamData.writingCount || 10) : 0;
 
       var correctCount = 0;
       var listenCorrect = 0;
       var readCorrect = 0;
+      var writeCorrect = 0;
 
       for (var i = 0; i < questions.length; i++) {
         var q = questions[i];
-        if (userAnswers[q.id] === q.answer) {
+        var qId = q.id !== undefined ? String(q.id) : String(i + 1);
+        var userAns = String(userAnswers[qId] || '').trim();
+        var isCorrect = false;
+
+        if (q.acceptedAnswers && Array.isArray(q.acceptedAnswers)) {
+          var normAns = userAns.replace(/[。\.]$/, '');
+          isCorrect = q.acceptedAnswers.some(function (a) {
+            return String(a).trim() === userAns || String(a).trim().replace(/[。\.]$/, '') === normAns;
+          });
+        } else {
+          isCorrect = (userAns.toLowerCase() === String(q.answer || '').trim().toLowerCase());
+        }
+
+        if (isCorrect) {
           correctCount++;
           if (i < listeningTotal) listenCorrect++;
-          else readCorrect++;
+          else if (i < listeningTotal + readingTotal) readCorrect++;
+          else writeCorrect++;
         }
       }
 
       var listenScore = Math.round((listenCorrect / listeningTotal) * 100);
       var readScore = Math.round((readCorrect / readingTotal) * 100);
-      var totalScore = listenScore + readScore;
-      var passed = (totalScore >= (currentExamData.passingScore || 120));
+      var writeScore = writingTotal > 0 ? Math.round((writeCorrect / writingTotal) * 100) : 0;
+
+      var totalScore = isHsk3 ? (listenScore + readScore + writeScore) : (listenScore + readScore);
+      var passingScore = currentExamData.passingScore || (isHsk3 ? 180 : 120);
+      var passed = (totalScore >= passingScore);
 
       this.renderPalette();
       this.loadQuestion(currentQuestionIndex);
 
-      this.showScoreModal(totalScore, correctCount, totalCount, listenScore, readScore, listenCorrect, listeningTotal, readCorrect, readingTotal, passed);
+      this.showScoreModal(totalScore, correctCount, totalCount, listenScore, readScore, writeScore, listenCorrect, listeningTotal, readCorrect, readingTotal, writeCorrect, writingTotal, passed, isHsk3);
     },
 
-    showScoreModal: function (score, correctCount, totalCount, listenScore, readScore, listenCorrect, listeningTotal, readCorrect, readingTotal, passed) {
+    showScoreModal: function (score, correctCount, totalCount, listenScore, readScore, writeScore, listenCorrect, listeningTotal, readCorrect, readingTotal, writeCorrect, writingTotal, passed, isHsk3) {
       var old = document.getElementById('cbt-score-popup');
       if (old) old.remove();
 
-      var levelLabel = (currentHskLevel === 'hsk2') ? 'HSK 2' : 'HSK 1';
+      var levelLabel = (currentHskLevel === 'hsk3') ? 'HSK 3' : ((currentHskLevel === 'hsk2') ? 'HSK 2' : 'HSK 1');
+      var maxScore = isHsk3 ? 300 : 200;
+      var passThreshold = isHsk3 ? 180 : 120;
+
       var popup = document.createElement('div');
       popup.id = 'cbt-score-popup';
       popup.className = 'cbt-score-backdrop';
@@ -586,13 +858,14 @@
         '<div class="score-modal-icon-wrap">' + (passed ? SVG_ICONS.trophy : SVG_ICONS.target) + '</div>' +
         '<h3 class="score-modal-title">' + (passed ? 'Chúc mừng! ĐẠT CHUẨN ' + levelLabel : 'Cần cố gắng thêm!') + '</h3>' +
         '<div class="score-modal-number ' + (passed ? 'score-passed' : 'score-failed') + '">' +
-          score + ' <span class="score-modal-max">/ 200 điểm</span>' +
+          score + ' <span class="score-modal-max">/ ' + maxScore + ' điểm</span>' +
         '</div>' +
         '<div class="score-modal-details">' +
           '<div>&bull; Tổng số câu đúng: <strong>' + correctCount + ' / ' + totalCount + ' câu</strong></div>' +
           '<div>&bull; Phần Nghe hiểu: <strong>' + listenScore + ' / 100 điểm</strong> (' + listenCorrect + '/' + listeningTotal + ' câu)</div>' +
           '<div>&bull; Phần Đọc hiểu: <strong>' + readScore + ' / 100 điểm</strong> (' + readCorrect + '/' + readingTotal + ' câu)</div>' +
-          '<div>&bull; Kết quả: <strong>' + (passed ? 'ĐẠT (>= 120 điểm)' : 'CHƯA ĐẠT (< 120 điểm)') + '</strong></div>' +
+          (isHsk3 ? '<div>&bull; Phần Viết: <strong>' + writeScore + ' / 100 điểm</strong> (' + writeCorrect + '/' + writingTotal + ' câu)</div>' : '') +
+          '<div>&bull; Kết quả: <strong>' + (passed ? 'ĐẠT (>= ' + passThreshold + ' điểm)' : 'CHƯA ĐẠT (< ' + passThreshold + ' điểm)') + '</strong></div>' +
         '</div>' +
         '<div class="score-modal-actions">' +
           '<button type="button" class="btn-score-secondary" onclick="document.getElementById(\'cbt-score-popup\').remove()">' +
@@ -608,7 +881,7 @@
     },
 
     // -------------------------------------------------------------
-    // SỔ TAY TỪ VỰNG & NGỮ PHÁP HSK 1 - 2
+    // SỔ TAY TỪ VỰNG & NGỮ PHÁP HSK
     // -------------------------------------------------------------
     openHandbookModal: function (level) {
       var lvl = level || currentHskLevel || 'hsk1';
@@ -624,17 +897,21 @@
       currentHandbookLevel = level || 'hsk1';
       var btnHsk1 = document.getElementById('btn-handbook-lvl-hsk1');
       var btnHsk2 = document.getElementById('btn-handbook-lvl-hsk2');
+      var btnHsk3 = document.getElementById('btn-handbook-lvl-hsk3');
       var btnVocab = document.getElementById('btn-handbook-tab-vocab');
       var btnGrammar = document.getElementById('btn-handbook-tab-grammar');
 
-      if (currentHandbookLevel === 'hsk2') {
-        if (btnHsk1) btnHsk1.classList.remove('active');
-        if (btnHsk2) btnHsk2.classList.add('active');
+      if (btnHsk1) btnHsk1.classList.toggle('active', currentHandbookLevel === 'hsk1');
+      if (btnHsk2) btnHsk2.classList.toggle('active', currentHandbookLevel === 'hsk2');
+      if (btnHsk3) btnHsk3.classList.toggle('active', currentHandbookLevel === 'hsk3');
+
+      if (currentHandbookLevel === 'hsk3') {
+        if (btnVocab) btnVocab.textContent = 'Từ vựng HSK 3 (Trích xuất)';
+        if (btnGrammar) btnGrammar.textContent = 'Ngữ pháp HSK 3';
+      } else if (currentHandbookLevel === 'hsk2') {
         if (btnVocab) btnVocab.textContent = 'Từ vựng HSK 2 (770+ từ)';
         if (btnGrammar) btnGrammar.textContent = 'Ngữ pháp HSK 2 Cốt lõi';
       } else {
-        if (btnHsk1) btnHsk1.classList.add('active');
-        if (btnHsk2) btnHsk2.classList.remove('active');
         if (btnVocab) btnVocab.textContent = 'Từ vựng HSK 1 (150 từ)';
         if (btnGrammar) btnGrammar.textContent = 'Ngữ pháp HSK 1 Cốt lõi';
       }
@@ -674,7 +951,7 @@
       var container = document.getElementById('handbook-vocab-content');
       if (!container) return;
 
-      var key = (currentHandbookLevel === 'hsk2') ? 'hsk2_vocabulary' : 'hsk1_vocabulary';
+      var key = (currentHandbookLevel === 'hsk3') ? 'hsk2_vocabulary' : ((currentHandbookLevel === 'hsk2') ? 'hsk2_vocabulary' : 'hsk1_vocabulary');
       var data = filteredList || (window.EDUZ_HSK_HANDBOOK && window.EDUZ_HSK_HANDBOOK[key]) || [];
       if (!data.length) {
         container.innerHTML = '<div class="handbook-empty">Không tìm thấy từ vựng phù hợp.</div>';
@@ -716,7 +993,7 @@
       var container = document.getElementById('handbook-grammar-content');
       if (!container) return;
 
-      var key = (currentHandbookLevel === 'hsk2') ? 'hsk2_grammar' : 'hsk1_grammar';
+      var key = (currentHandbookLevel === 'hsk3') ? 'hsk2_grammar' : ((currentHandbookLevel === 'hsk2') ? 'hsk2_grammar' : 'hsk1_grammar');
       var grammarData = (window.EDUZ_HSK_HANDBOOK && window.EDUZ_HSK_HANDBOOK[key]) || [];
       var html = '';
 
@@ -749,7 +1026,7 @@
 
     searchHandbook: function (query) {
       var q = (query || '').toLowerCase().trim();
-      var key = (currentHandbookLevel === 'hsk2') ? 'hsk2_vocabulary' : 'hsk1_vocabulary';
+      var key = (currentHandbookLevel === 'hsk3') ? 'hsk2_vocabulary' : ((currentHandbookLevel === 'hsk2') ? 'hsk2_vocabulary' : 'hsk1_vocabulary');
       var allVocab = (window.EDUZ_HSK_HANDBOOK && window.EDUZ_HSK_HANDBOOK[key]) || [];
       if (!q) {
         this.renderHandbookVocab(allVocab);

@@ -16,7 +16,7 @@
   }
 
   function switchView(viewId) {
-    var views = ['view-home', 'view-quiz', 'hsk1-hub-view', 'hsk2-hub-view'];
+    var views = ['view-home', 'view-quiz', 'hsk1-hub-view', 'hsk2-hub-view', 'hsk3-hub-view'];
     for (var i = 0; i < views.length; i++) {
       var el = document.getElementById(views[i]);
       if (el) {
@@ -52,6 +52,7 @@
   function getQuestionCount(subId) {
     if (subId === 'hsk1') return 400;
     if (subId === 'hsk2') return 600;
+    if (subId === 'hsk3') return 1600;
     if (window.TDV_QUIZ && typeof window.TDV_QUIZ.getTotalQuestionCountForSubject === 'function') {
       var c = window.TDV_QUIZ.getTotalQuestionCountForSubject(subId);
       if (c > 0) return c;
@@ -171,6 +172,8 @@
           window.HSK_APP.openHsk1Hub();
         } else if (subId === 'hsk2' && window.HSK_APP) {
           window.HSK_APP.openHsk2Hub();
+        } else if (subId === 'hsk3' && window.HSK_APP) {
+          window.HSK_APP.openHsk3Hub();
         } else if (window.TDV_QUIZ && typeof window.TDV_QUIZ.openSubject === 'function') {
           window.TDV_QUIZ.openSubject(subId);
         }
@@ -208,6 +211,9 @@
 
     var btnHsk2Back = document.getElementById('btn-hsk2-back');
     if (btnHsk2Back) btnHsk2Back.addEventListener('click', goHome);
+
+    var btnHsk3Back = document.getElementById('btn-hsk3-back');
+    if (btnHsk3Back) btnHsk3Back.addEventListener('click', goHome);
 
     var searchInput = document.getElementById('subject-search-input');
     if (searchInput) {

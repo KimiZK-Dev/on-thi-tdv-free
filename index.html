@@ -480,6 +480,36 @@
       </div>
     </section>
 
+    <!-- VIEW 6: HSK 3 HUB -->
+    <section class="view-section hidden" id="hsk3-hub-view">
+      <div class="hsk-hub-wrapper">
+        <div class="hsk-hub-header">
+          <button class="btn-back-hub" id="btn-hsk3-back" type="button">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Trang chủ</span>
+          </button>
+          <div class="hsk-hub-title-box">
+            <div class="hsk-hub-badge">HSK LEVEL 3 &bull; HANBAN CTI</div>
+            <h2 class="hsk-hub-title">Kho Đề Thi HSK 3 CBT Quốc Tế</h2>
+            <p class="hsk-hub-sub">20 Đề thi thật Hanban CTI • 1.600 câu hỏi • 3 kỹ năng Nghe - Đọc - Viết • Thang điểm 300 • Miễn phí 100%</p>
+          </div>
+          <button class="btn-handbook-trigger" onclick="window.HSK_APP.openHandbookModal('hsk3')" type="button">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>Sổ tay HSK</span>
+          </button>
+        </div>
+        <div class="hsk-exam-grid" id="hsk3-exam-list">
+          <!-- Rendered by window.HSK_APP.renderHsk3ExamList() -->
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Question Map Palette Drawer -->
@@ -690,6 +720,10 @@
             <div class="cbt-palette-title" id="palette-read-title">二、阅读 (Phần Đọc)</div>
             <div class="cbt-palette-grid" id="palette-reading"></div>
           </div>
+          <div class="palette-group hidden" id="palette-group-writing">
+            <div class="cbt-palette-title" id="palette-write-title">三、书写 (Phần Viết)</div>
+            <div class="cbt-palette-grid" id="palette-writing"></div>
+          </div>
         </aside>
       </div>
     </div>
@@ -715,6 +749,7 @@
         <div class="handbook-level-switch">
           <button type="button" class="handbook-lvl-tab active" id="btn-handbook-lvl-hsk1" onclick="window.HSK_APP.switchHandbookLevel('hsk1')">HSK 1</button>
           <button type="button" class="handbook-lvl-tab" id="btn-handbook-lvl-hsk2" onclick="window.HSK_APP.switchHandbookLevel('hsk2')">HSK 2</button>
+          <button type="button" class="handbook-lvl-tab" id="btn-handbook-lvl-hsk3" onclick="window.HSK_APP.switchHandbookLevel('hsk3')">HSK 3</button>
         </div>
         <div class="handbook-tab-switch">
           <button type="button" class="handbook-type-tab active" id="btn-handbook-tab-vocab" onclick="window.HSK_APP.switchHandbookTab('vocab')">Từ vựng (150 từ)</button>
@@ -743,7 +778,7 @@
         <strong>Ôn Thi TDV Free</strong> &bull; Nền tảng học và thi trắc nghiệm trực tuyến mở
       </div>
       <div class="footer-note" id="footer-stats-note">
-        Kho dữ liệu 9 môn học &bull; 2.690 câu hỏi &bull; Phát triển vì cộng đồng sinh viên
+        Kho dữ liệu 10 môn học &bull; 4.290 câu hỏi &bull; Phát triển vì cộng đồng sinh viên
       </div>
     </div>
   </footer>
@@ -759,6 +794,7 @@
   <script src="data/vimo.js"></script>
   <script src="data/hsk.js"></script>
   <script src="data/hsk2.js"></script>
+  <script src="data/hsk3.js"></script>
   <script src="data/hsk-handbook.js"></script>
   <script src="tts-engine.js"></script>
   <script src="quiz-engine.js"></script>
